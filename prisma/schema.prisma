@@ -1,0 +1,91 @@
+// Prisma schema untuk Dolan Lur
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Model untuk User
+model User {
+  id         Int        @id @default(autoincrement())
+  username   String     @unique
+  password   String
+  role       Role       @default(User)
+  kategori   Kategori[] // Relasi ke kategori yang dimiliki user
+  rating     Rating[] // Relasi ke rating yang diberikan user
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+
+  @@map("users") // Nama tabel di database
+}
+
+// Enum untuk Role pengguna
+enum Role {
+  Admin
+  User
+}
+
+// Model untuk Kategori wisata
+model Kategori {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  nama       String
+  wisata     Wisata[] // Relasi ke wisata dalam kategori
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("categories")
+  @@index([user_id]) // Indeks untuk user_id
+}
+
+// Model untuk Wisata
+model Wisata {
+  id          Int      @id @default(autoincrement())
+  kategori_id Int
+  kategori    Kategori @relation(fields: [kategori_id], references: [id], onDelete: Cascade)
+  nama        String
+  deskripsi   String   @db.Text
+  lokasi      String
+  jam         String
+  gambar      Gambar[] // Relasi ke gambar wisata
+  rating      Rating[] // Relasi ke rating wisata
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  @@map("places")
+  @@index([kategori_id]) // Indeks untuk kategori_id
+}
+
+// Model untuk Gambar wisata
+model Gambar {
+  id         Int      @id @default(autoincrement())
+  wisata_id  Int
+  wisata     Wisata   @relation(fields: [wisata_id], references: [id], onDelete: Cascade)
+  filename   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("images")
+  @@index([wisata_id]) // Indeks untuk wisata_id
+}
+
+// Model untuk Rating
+model Rating {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  wisata_id  Int
+  wisata     Wisata   @relation(fields: [wisata_id], references: [id], onDelete: Cascade)
+  komentar   String   @db.Text
+  bintang    Int      @db.UnsignedInt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("ratings")
+  @@index([user_id, wisata_id]) // Indeks gabungan untuk performa
+}
