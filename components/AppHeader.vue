@@ -2,7 +2,7 @@
   <header class="flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white text-sm py-3">
     <nav class="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between">
       <a class="sm:order-1 flex-none text-xl font-semibold focus:outline-none focus:opacity-80" href="#">
-        Dolan.
+        Dolan Lur.
       </a>
       <div class="sm:order-3 flex items-center gap-x-2">
         <button type="button"

@@ -14,7 +14,7 @@
     <div class="relative flex flex-col h-full max-h-full">
       <div class="px-6 pt-4">
         <!-- Logo -->
-        <NuxtLink to="/admin" class="font-semibold">Dolan.</NuxtLink>
+        <NuxtLink to="/admin" class="font-semibold">Dolan Lur.</NuxtLink>
         <!-- End Logo -->
       </div>
 
