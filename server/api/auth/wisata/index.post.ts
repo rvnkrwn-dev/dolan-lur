@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { Wisata } from '~/server/model/Wisata';
 import { Gambar } from '~/server/model/Gambar';
+import { fileURLToPath } from 'url';
 
 export default defineEventHandler(async (event) => {
     try {
@@ -50,7 +51,12 @@ export default defineEventHandler(async (event) => {
         const wisata = await Wisata.createWisata(wisataData);
 
         // Direktori upload gambar
-        const uploadsDir = path.join(process.cwd(), 'uploads');
+        const uploadsDir = path.join(process.cwd(), 'uploads'); // error di vercel
+        // const __filename = fileURLToPath(import.meta.url);
+        // const __dirname = path.dirname(__filename);
+        //
+        // // Path untuk 'uploads' di proyek lokal
+        // const uploadsDir = path.join(__dirname, '..', 'uploads');
         if (!fs.existsSync(uploadsDir)) {
             fs.mkdirSync(uploadsDir, { recursive: true });
         }

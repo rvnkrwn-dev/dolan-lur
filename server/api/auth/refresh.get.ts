@@ -19,7 +19,6 @@ export default defineEventHandler(async (event) => {
         const { accessToken } = generateToken(user)
 
         return { access_token: accessToken }
-
     } catch (error) {
         deleteRefreshToken(event)
         return sendError(event, createError({

@@ -2,7 +2,7 @@
   <div>
     <!-- Slider Section -->
     <div class="relative max-w-[85rem] w-full mx-auto">
-      <div data-hs-carousel='{"loadingClasses": "opacity-0"}' class="hs-carousel relative w-full overflow-x-hidden min-h-80 md:min-h-[60dvh] rounded-lg">
+      <div data-hs-carousel='{"loadingClasses": "opacity-0"}' class="hs-carousel relative w-full overflow-x-hidden min-h-64 md:min-h-[60dvh] sm:rounded-lg">
         <div class="hs-carousel-body absolute top-0 bottom-0 start-0 flex transition-transform duration-700 opacity-0">
           <!-- Slide 1: Kebun Raya Baturaden -->
           <div class="hs-carousel-slide flex items-center justify-center">

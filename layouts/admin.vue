@@ -153,23 +153,6 @@ const handleLogout = async () => {
   });
 };
 
-definePageMeta({
-  middleware: async (to, from) => {
-    const { useAuthUser } = useAuth();  // Mengambil hook untuk autentikasi pengguna
-    const user = useAuthUser().value;  // Ambil user yang sudah tersedia di store/komposisi
-
-    // Pastikan user sudah ada dan memiliki role yang valid
-    if (!user && to.path.includes("/admin")) {
-      return navigateTo('/login');  // Arahkan ke halaman login jika pengguna tidak ditemukan
-    }
-
-    if (user.role !== 'Admin'  && to.path.includes("/admin")) {
-      return navigateTo('/');  // Mengarahkan pengguna ke halaman utama jika bukan admin
-    }
-  }
-});
-
-
 </script>
 
 <style scoped>
