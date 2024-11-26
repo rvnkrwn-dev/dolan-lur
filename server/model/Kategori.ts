@@ -34,4 +34,8 @@ export class Kategori {
             where: { id },
         });
     };
+
+    static countKategori = () => {
+        return prisma.kategori.count();
+    }
 }

@@ -64,19 +64,8 @@
 
           <div class="mt-1 flex items-center gap-x-2">
             <h3 class="text-xl sm:text-2xl font-medium text-gray-800">
-              72,540
+              {{ stats?.users }}
             </h3>
-            <span class="flex items-center gap-x-1 text-green-600">
-                <svg class="inline-block size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                     stroke-linejoin="round">
-                  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
-                  <polyline points="16 7 22 7 22 13"/>
-                </svg>
-                <span class="inline-block text-sm">
-                  1.7%
-                </span>
-              </span>
           </div>
         </div>
       </div>
@@ -93,7 +82,7 @@
 
           <div class="mt-1 flex items-center gap-x-2">
             <h3 class="text-xl sm:text-2xl font-medium text-gray-800">
-              29.4%
+              {{ stats?.destination }}
             </h3>
           </div>
         </div>
@@ -111,7 +100,7 @@
 
           <div class="mt-1 flex items-center gap-x-2">
             <h3 class="text-xl sm:text-2xl font-medium text-gray-800">
-              29.4%
+              {{ stats?.categories }}
             </h3>
           </div>
         </div>
@@ -193,6 +182,7 @@ definePageMeta({
 })
 
 const wisata = ref([]);
+const stats = ref({});
 const loading = ref(false);
 const error = ref(null);
 
@@ -210,8 +200,21 @@ const fetchWisata = async () => {
   }
 };
 
+const fetchStats = async () => {
+  try {
+    const response = await useFetchApi('/api/data/stats');
+    stats.value = response?.data ?? {};
+  } catch (err) {
+    error.value = err.message || 'Gagal memuat data wisata';
+    alert('Gagal memuat data wisata');
+  } finally {
+    loading.value = false;
+  }
+};
+
 onMounted(() => {
   fetchWisata(); // Menambahkan pemanggilan fetchWisata saat komponen dimuat
+  fetchStats();
 });
 </script>
 

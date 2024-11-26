@@ -47,4 +47,8 @@ export class Wisata {
             where: { id },
         });
     };
+
+    static countWisata = () => {
+        return prisma.wisata.count()
+    }
 }

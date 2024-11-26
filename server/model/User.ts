@@ -50,4 +50,8 @@ export class User {
             where: { id },
         });
     };
+
+    static countUsers = () => {
+        return prisma.user.count()
+    }
 }
