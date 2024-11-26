@@ -54,8 +54,10 @@ export default () => {
                 const data = await useFetchApi('/api/auth/refresh');
                 setToken(data.access_token);
                 resolve(true);
+                isLoggedIn().value = true
             } catch (error) {
                 await logout();
+                isLoggedIn().value = false
                 resolve(false); // Pastikan tetap resolve meskipun refresh gagal
             }
         });
@@ -95,7 +97,6 @@ export default () => {
         return new Promise(async (resolve, reject) => {
             setIsAuthLoading(true);
             try {
-                if (!isLoggedIn().value) return
                 await refreshToken()
                 await getUser()
 

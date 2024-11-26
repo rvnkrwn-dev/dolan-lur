@@ -12,6 +12,12 @@ export class Gambar {
         });
     };
 
+    static createManyGambar = (data: GambarType[]) => {
+        return prisma.gambar.createMany({
+            data,
+        });
+    };
+
     static updateGambar = (id: number, data: Partial<GambarType>) => {
         return prisma.gambar.update({
             where: { id },

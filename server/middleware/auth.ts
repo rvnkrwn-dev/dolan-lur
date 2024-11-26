@@ -6,7 +6,8 @@ import {User} from "~/server/model/User";
 export default defineEventHandler(async (event) => {
     const endpoints = [
         '/api/auth/user',
-        '/api/auth/kategori'
+        '/api/auth/kategori',
+        '/api/auth/wisata',
     ]
 
     const isHandledByThisMiddleware = endpoints.some(endopoint => {

@@ -103,6 +103,15 @@
                             <label for="gambar-wisata">Gambar :</label>
                             <input type="file" id="gambar-wisata" @change="handleFileChange" accept="image/*">
                           </div>
+
+                          <div v-if="gambar.length" class="mt-4">
+                            <div v-for="(file, index) in gambar" :key="index" class="relative inline-block mr-2 mb-2">
+                              <img :src="file.preview" alt="Preview" class="w-24 h-24 object-cover rounded-md">
+                              <button type="button" @click="removeImage(index)" class="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex justify-center items-center text-xs">
+                                X
+                              </button>
+                            </div>
+                          </div>
                         </form>
                       </div>
                       <!-- Footer -->
@@ -165,12 +174,13 @@ const kategori_id = ref('');
 const deskripsi = ref('');
 const lokasi = ref('');
 const jam = ref('');
-const gambar = ref<File | null>(null);
+const gambar = ref<File[]>([]); // Handle multiple files
 const kategori = ref([]);
 const wisata = ref([]);
 const loading = ref(false);
 const error = ref(null);
 
+// Fetch categories
 const fetchKategori = async () => {
   loading.value = true;
   error.value = null;
@@ -185,7 +195,7 @@ const fetchKategori = async () => {
   }
 };
 
-// Menambahkan fungsi untuk fetch data wisata
+// Fetch wisata data
 const fetchWisata = async () => {
   loading.value = true;
   error.value = null;
@@ -202,54 +212,65 @@ const fetchWisata = async () => {
 
 onMounted(() => {
   fetchKategori();
-  fetchWisata(); // Menambahkan pemanggilan fetchWisata saat komponen dimuat
+  fetchWisata(); // Fetch wisata when component is mounted
 });
 
+// Handle file change for multiple images
 const handleFileChange = (event: Event) => {
   const target = event.target as HTMLInputElement;
   if (target.files) {
-    gambar.value = target.files[0];
+    // Convert the FileList to an array and generate previews
+    const files = Array.from(target.files);
+    files.forEach(file => {
+      file.preview = URL.createObjectURL(file); // Generate a preview URL
+    });
+    gambar.value = [...gambar.value, ...files]; // Add new files to the list
   }
 };
 
-const handleDelete = async (id: number) => {
-  const confirmDelete = confirm("Apakah Anda yakin ingin menghapus wisata ini?");
-  if (!confirmDelete) return;
-
-  try {
-    await useFetchApi(`/api/auth/wisata/${id}`, { method: 'DELETE' });
-    wisata.value = wisata.value.filter(w => w.id !== id);
-    alert("Wisata berhasil dihapus!");
-  } catch (err) {
-    alert("Gagal menghapus wisata.");
-  }
+// Remove an image from the list
+const removeImage = (index: number) => {
+  gambar.value.splice(index, 1);
 };
 
+// Submit the form
 const handleSubmit = async () => {
   const closeButton = document.querySelector('[data-hs-overlay="#hs-scale-animation-modal"]');
   const formData = new FormData();
+
+  // Append form data
   formData.append('nama', name.value);
   formData.append('kategori_id', kategori_id.value);
   formData.append('deskripsi', deskripsi.value);
   formData.append('lokasi', lokasi.value);
   formData.append('jam', jam.value);
-  if (gambar.value) {
-    formData.append('gambar', gambar.value);
-  }
+
+  // Append all selected images to FormData
+  gambar.value.forEach(file => {
+    formData.append('gambar[]', file);
+  });
 
   try {
     const response = await useFetchApi('/api/auth/wisata', {
       method: 'POST',
-      body: formData
+      body: formData,
     });
 
-    wisata.value.push(response?.data);
+    if (response?.data) {
+      wisata.value.push(response.data?.wisata);
+      alert('Wisata berhasil ditambahkan!');
+    } else {
+      alert('Gagal menambah wisata: Response tidak valid');
+    }
+
+    // Close the modal if the close button exists
     if (closeButton) closeButton.click();
-    alert('Wisata berhasil ditambahkan!');
-  } catch (e) {
+  } catch (error) {
+    console.error('Error adding wisata:', error);
     alert("Gagal menambah wisata");
+
+    // Close the modal if the close button exists
     if (closeButton) closeButton.click();
   }
 }
 </script>
-

@@ -160,22 +160,45 @@ onMounted(() => {
 });
 
 const handleDelete = async (id: number) => {
-  const confirmDelete = confirm("Apakah Anda yakin ingin menghapus kategori ini?");
-  if (!confirmDelete) return;
+  Swal.fire({
+    title: "Anda yakin?",
+    text: "Anda tidak dapat mengembalikan ini!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Ya, hapus!",
+    cancelButtonText: "Batal"
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        await useFetchApi(`/api/auth/kategori/${id}`, {
+          method: 'DELETE',
+        });
 
-  try {
-    await useFetchApi(`/api/auth/kategori/${id}`, {
-      method: 'DELETE',
-    });
+        // Hapus data dari tabel setelah berhasil
+        kategori.value = kategori.value.filter(k => k.id !== id);
 
-    // Hapus data dari tabel setelah berhasil
-    kategori.value = kategori.value.filter(k => k.id !== id);
-
-    alert("Kategori berhasil dihapus!");
-  } catch (err) {
-    console.error(err);
-    alert("Gagal menghapus kategori.");
-  }
+        await Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Berhasil menghapus kategori",
+          toast: true,
+          showConfirmButton: false,
+          timer: 1500
+        });
+      } catch (err) {
+        await Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Gagal menghapus kategori",
+          toast: true,
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    }
+  });
 };
 
 const handleSubmit = async () => {
@@ -184,12 +207,15 @@ const handleSubmit = async () => {
     const response = await useFetchApi('/api/auth/kategori', {
       method: 'POST',
       body: {
-        user_id: useAuthUser().value.id,
         nama: name.value
       }
     })
 
     kategori.value.push(response?.data);
+
+    if (closeButton) {
+      closeButton.click();
+    }
 
     await Swal.fire({
       position: "top-end",
@@ -199,10 +225,10 @@ const handleSubmit = async () => {
       showConfirmButton: false,
       timer: 1500
     });
+  } catch (e) {
     if (closeButton) {
       closeButton.click();
     }
-  } catch (e) {
     await Swal.fire({
       position: "top-end",
       icon: "error",
@@ -211,9 +237,6 @@ const handleSubmit = async () => {
       showConfirmButton: false,
       timer: 1500
     });
-    if (closeButton) {
-      closeButton.click();
-    }
   }
 }
 </script>

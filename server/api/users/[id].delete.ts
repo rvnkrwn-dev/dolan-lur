@@ -1,17 +1,17 @@
-import { Wisata } from '~/server/model/Wisata';
+import { User } from '~/server/model/User';
 
 export default defineEventHandler(async (event) => {
     try {
         const id = parseInt(event.context.params?.id || "0");
         if (!id) {
             setResponseStatus(event, 400);
-            return { code: 400, message: "Invalid Wisata ID." };
+            return { code: 400, message: "Invalid user ID." };
         }
 
-        await Wisata.deleteWisata(id);
+        await User.deleteUser(id);
 
         setResponseStatus(event, 200);
-        return { code: 200, message: "Wisata successfully deleted!" };
+        return { code: 200, message: "User successfully deleted!" };
     } catch (error: any) {
         return sendError(
             event,

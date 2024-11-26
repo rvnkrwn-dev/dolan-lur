@@ -1,25 +1,25 @@
-import bcrypt from 'bcryptjs';
-import { User } from '~/server/model/User';
+import { Wisata } from '~/server/model/Wisata';
 
 export default defineEventHandler(async (event) => {
     try {
         const id = parseInt(event.context.params?.id || "0");
-        const { username, password, role } = await readBody(event);
+        const { nama, deskripsi, lokasi, jam } = await readBody(event);
 
-        if (!id || (!username && !password && !role)) {
+        if (!id || (!nama && !deskripsi && !lokasi && !jam)) {
             setResponseStatus(event, 400);
             return { code: 400, message: "Invalid request data." };
         }
 
         const payload: any = {};
-        if (username) payload.username = username;
-        if (password) payload.password = bcrypt.hashSync(password, 10);
-        if (role) payload.role = role;
+        if (nama) payload.nama = nama;
+        if (deskripsi) payload.deskripsi = deskripsi;
+        if (lokasi) payload.lokasi = lokasi;
+        if (jam) payload.jam = jam;
 
-        const updatedUser = await User.updateUser(id, payload);
+        const updatedWisata = await Wisata.updateWisata(id, payload);
 
         setResponseStatus(event, 200);
-        return { code: 200, message: "User successfully updated!", data: updatedUser };
+        return { code: 200, message: "Wisata successfully updated!", data: updatedWisata };
     } catch (error: any) {
         return sendError(
             event,

@@ -6,6 +6,7 @@ interface WisataType {
     deskripsi: string;
     lokasi: string;
     jam: string;
+    user_id: number; // Menambahkan user_id untuk relasi dengan User
 }
 
 export class Wisata {
