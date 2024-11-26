@@ -2,8 +2,8 @@ import { jwtDecode } from "jwt-decode";
 
 export default () => {
     // Hooks untuk state autentikasi
-    const useAuthToken = () => useState('auth_token');
-    const useAuthUser = () => useState('auth_user');
+    const useAuthToken = () => useCookie('auth_token');
+    const useAuthUser = () => useCookie('auth_user');
     const useAuthLoading = () => useState('auth_loading', () => true);
     const isLoggedIn = () => useCookie('isLoggedIn')
 

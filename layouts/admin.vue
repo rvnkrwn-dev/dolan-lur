@@ -116,23 +116,59 @@
 </template>
 
 <script setup lang="ts">
+import Swal from "sweetalert2";
+
 const {logout} = useAuth()
 const handleLogout = async () => {
-  const confirmLogout = confirm("Apakah Anda yakin ingin logout?");
-  if (!confirmLogout) return; // Jika pengguna membatalkan, keluar dari fungsi
+  Swal.fire({
+    title: "Anda yakin?",
+    text: "Anda ingin keluar dari sini!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    cancelButtonText: "Batal",
+    confirmButtonText: "Ya, Keluar!"
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        // Memanggil fungsi logout dari useAuth
+        await logout();
 
-  try {
-    // Memanggil fungsi logout dari useAuth
-    await logout();
+        // Redirect atau tindakan lain setelah logout berhasil
+        return await navigateTo('/login')
+      } catch (error) {
+        await Swal.fire({
+          position: "bottom-end",
+          icon: "error",
+          title: "Terjadi kesalahan saat logout.",
+          showConfirmButton: false,
+          timer: 1500,
+          toast: true
+        });
+      } finally {
 
-    // Redirect atau tindakan lain setelah logout berhasil
-    alert('Anda telah berhasil logout.');
-    window.location.href = '/login'; // Redirect ke halaman login atau halaman lain
-  } catch (error) {
-    console.error('Gagal logout:', error);
-    alert('Terjadi kesalahan saat logout.');
-  }
+      }
+    }
+  });
 };
+
+definePageMeta({
+  middleware: async (to, from) => {
+    const { useAuthUser } = useAuth();  // Mengambil hook untuk autentikasi pengguna
+    const user = useAuthUser().value;  // Ambil user yang sudah tersedia di store/komposisi
+
+    // Pastikan user sudah ada dan memiliki role yang valid
+    if (!user && to.path.includes("/admin")) {
+      return navigateTo('/login');  // Arahkan ke halaman login jika pengguna tidak ditemukan
+    }
+
+    if (user.role !== 'Admin'  && to.path.includes("/admin")) {
+      return navigateTo('/');  // Mengarahkan pengguna ke halaman utama jika bukan admin
+    }
+  }
+});
+
 
 </script>
 

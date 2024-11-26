@@ -24,10 +24,23 @@
           </svg>
           <span class="sr-only">Toggle</span>
         </button>
-        <NuxtLink :to="user?.id? '/admin' : '/login'"
-                  class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
-          {{user?.id? "Dashboard" : "Sign in"}}
-        </NuxtLink>
+        <template v-if="user">
+          <NuxtLink v-if="user.role === 'Admin'" to="/admin"
+                    class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
+            Dashboard
+          </NuxtLink>
+          <NuxtLink v-else
+                    @click="handleLogout"
+                    class="cursor-pointer py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
+            Keluar
+          </NuxtLink>
+        </template>
+        <template v-else>
+          <NuxtLink to="/login"
+                    class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
+            Masuk
+          </NuxtLink>
+        </template>
       </div>
       <div id="hs-navbar-alignment"
            class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:grow-0 sm:basis-auto sm:block sm:order-2"
@@ -44,8 +57,41 @@
 </template>
 
 <script setup>
-const {useAuthUser}  = useAuth()
+import Swal from "sweetalert2";
+
+const {useAuthUser, logout}  = useAuth()
 const user = computed(() => useAuthUser().value)
+
+const handleLogout = async () => {
+  Swal.fire({
+    title: "Anda yakin?",
+    text: "Anda ingin keluar dari sini!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    cancelButtonText: "Batal",
+    confirmButtonText: "Ya, Keluar!"
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        // Memanggil fungsi logout dari useAuth
+        await logout();
+      } catch (error) {
+        await Swal.fire({
+          position: "bottom-end",
+          icon: "error",
+          title: "Terjadi kesalahan saat logout.",
+          showConfirmButton: false,
+          timer: 1500,
+          toast: true
+        });
+      } finally {
+
+      }
+    }
+  });
+};
 </script>
 
 <style lang="scss" scoped>
