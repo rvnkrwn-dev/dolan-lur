@@ -28,7 +28,7 @@ export default defineNuxtConfig({
                 'font-src': ["'self'", 'https:', 'data:'],  // Izinkan font dari domain yang diizinkan
                 'form-action': ["'self'"],  // Izinkan formulir hanya dikirim ke domain yang sama
                 'frame-ancestors': ["'self'"],  // Tidak ada iframe dari sumber lain
-                'img-src': ["'self'", 'data:', 'https://', 'https://images.unsplash.com'],  // Izinkan gambar dari domain yang diizinkan
+                'img-src': ["'self'", 'data:', 'https://images.unsplash.com', 'https://cdn.paradisotour.co.id', 'https://ayukjalan.com'],  // Izinkan gambar dari domain yang diizinkan
                 'object-src': ["'none'"],  // Tidak izinkan objek seperti Flash
                 'script-src': ["'self'", 'https:', "'unsafe-inline'", "'strict-dynamic'", "'nonce-{{nonce}}'"],  // Izinkan skrip dari domain yang aman
                 'upgrade-insecure-requests': true,  // Paksakan penggunaan HTTPS
@@ -84,8 +84,8 @@ export default defineNuxtConfig({
 
         // Pengaturan CSRF
         csrf: {
-            enabled: true,  // Mengaktifkan perlindungan CSRF
-            nonce: true,  // Menambahkan nonce untuk permintaan yang aman
+            enabled: false,  // Mengaktifkan perlindungan CSRF
+            nonce: false,  // Menambahkan nonce untuk permintaan yang aman
         },
 
         // Pengaturan untuk menyembunyikan log atau informasi sensitif

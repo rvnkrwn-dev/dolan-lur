@@ -102,7 +102,7 @@ const onSubmit = async () => {
   } catch (err) {
     await Swal.fire({
       position: "top-end",
-      icon: "error",
+      icon: "warning",
       title: "Failed to register",
       toast: true,
       showConfirmButton: false,
