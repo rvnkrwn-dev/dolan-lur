@@ -44,7 +44,8 @@
 </template>
 
 <script setup>
-
+const {useAuthUser}  = useAuth()
+const user = computed(() => useAuthUser().value)
 </script>
 
 <style lang="scss" scoped>
