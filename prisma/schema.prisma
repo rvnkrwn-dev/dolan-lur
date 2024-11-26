@@ -53,6 +53,8 @@ model Wisata {
   kategori    Kategori @relation(fields: [kategori_id], references: [id], onDelete: Cascade)
   nama        String
   deskripsi   String   @db.Text
+  harga       Int
+  carousel    Boolean  @default(false)
   lokasi      String
   jam         String
   gambar      Gambar[] // Relasi ke gambar wisata

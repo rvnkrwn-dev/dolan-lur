@@ -100,6 +100,11 @@
                           </div>
 
                           <div class="max-w-sm mt-4">
+                            <label for="harga-wisata">Harga :</label>
+                            <input v-model="harga" type="text" id="harga-wisata" class="py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Jam Buka" required>
+                          </div>
+
+                          <div class="max-w-sm mt-4">
                             <label for="gambar-wisata">Gambar :</label>
                             <input type="file" id="gambar-wisata" @change="handleFileChange" accept="image/*">
                           </div>
@@ -165,6 +170,8 @@
 </template>
 
 <script setup lang="ts">
+import Swal from "sweetalert2";
+
 definePageMeta({
   layout: 'admin',
 })
@@ -174,6 +181,7 @@ const kategori_id = ref('');
 const deskripsi = ref('');
 const lokasi = ref('');
 const jam = ref('');
+const harga = ref();
 const gambar = ref<File[]>([]); // Handle multiple files
 const kategori = ref([]);
 const wisata = ref([]);
@@ -244,6 +252,7 @@ const handleSubmit = async () => {
   formData.append('deskripsi', deskripsi.value);
   formData.append('lokasi', lokasi.value);
   formData.append('jam', jam.value);
+  formData.append('harga', harga.value);
 
   // Append all selected images to FormData
   gambar.value.forEach(file => {
@@ -273,4 +282,46 @@ const handleSubmit = async () => {
     if (closeButton) closeButton.click();
   }
 }
+
+const handleDelete = async (id: number) => {
+  Swal.fire({
+    title: "Anda yakin?",
+    text: "Anda tidak dapat mengembalikan ini!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Ya, hapus!",
+    cancelButtonText: "Batal"
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        await useFetchApi(`/api/auth/wisata/${id}`, {
+          method: 'DELETE',
+        });
+
+        // Hapus data dari tabel setelah berhasil
+        wisata.value = wisata.value.filter(k => k.id !== id);
+
+        await Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Berhasil menghapus wisata",
+          toast: true,
+          showConfirmButton: false,
+          timer: 1500
+        });
+      } catch (err) {
+        await Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Gagal menghapus wisata",
+          toast: true,
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    }
+  });
+};
 </script>

@@ -29,7 +29,7 @@ export default defineEventHandler(async (event) => {
         }
 
         // Mendapatkan field yang diperlukan
-        const { kategori_id, nama, deskripsi, lokasi, jam } = fields;
+        const { kategori_id, nama, deskripsi, lokasi, jam, harga } = fields;
 
         // Validasi data
         if (!kategori_id || !nama || !deskripsi || !lokasi || !jam) {
@@ -44,6 +44,7 @@ export default defineEventHandler(async (event) => {
             deskripsi,
             lokasi,
             jam,
+            harga: parseInt(harga),
             user_id: userId // Menggunakan user_id dari autentikasi
         };
         const wisata = await Wisata.createWisata(wisataData);
