@@ -31,6 +31,12 @@ export class Gambar {
         });
     };
 
+    static getAllGambarById = (id: number) => {
+        return prisma.gambar.findMany({
+            where: { id },
+        });
+    };
+
     static getAllGambar = () => {
         return prisma.gambar.findMany();
     };
