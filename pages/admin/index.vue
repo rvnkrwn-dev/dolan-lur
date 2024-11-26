@@ -38,15 +38,15 @@
   <div class="w-full pt-10 px-4 sm:px-6 md:px-8 lg:ps-72">
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
       <!-- Card -->
-      <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+      <div class="flex flex-col bg-white border shadow-sm rounded-xl">
         <div class="p-4 md:p-5">
           <div class="flex items-center gap-x-2">
-            <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-neutral-500">
+            <p class="text-xs uppercase tracking-wide text-gray-500">
               Total users
             </p>
             <div class="hs-tooltip">
               <div class="hs-tooltip-toggle">
-                <svg class="shrink-0 size-4 text-gray-500 dark:text-neutral-500" xmlns="http://www.w3.org/2000/svg"
+                <svg class="shrink-0 size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg"
                      width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                      stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="12" cy="12" r="10"/>
@@ -54,7 +54,7 @@
                   <path d="M12 17h.01"/>
                 </svg>
                 <span
-                    class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-neutral-700"
+                    class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm"
                     role="tooltip">
                     The number of daily users
                   </span>
@@ -63,7 +63,7 @@
           </div>
 
           <div class="mt-1 flex items-center gap-x-2">
-            <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
+            <h3 class="text-xl sm:text-2xl font-medium text-gray-800">
               72,540
             </h3>
             <span class="flex items-center gap-x-1 text-green-600">
@@ -83,16 +83,34 @@
       <!-- End Card -->
 
       <!-- Card -->
-      <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-neutral-800 dark:border-neutral-700">
+      <div class="flex flex-col bg-white border shadow-sm rounded-xl">
         <div class="p-4 md:p-5">
           <div class="flex items-center gap-x-2">
-            <p class="text-xs uppercase tracking-wide text-gray-500 dark:text-neutral-500">
+            <p class="text-xs uppercase tracking-wide text-gray-500">
               TOTAL DESTINATIONS
             </p>
           </div>
 
           <div class="mt-1 flex items-center gap-x-2">
-            <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-neutral-200">
+            <h3 class="text-xl sm:text-2xl font-medium text-gray-800">
+              29.4%
+            </h3>
+          </div>
+        </div>
+      </div>
+      <!-- End Card -->
+
+      <!-- Card -->
+      <div class="flex flex-col bg-white border shadow-sm rounded-xl">
+        <div class="p-4 md:p-5">
+          <div class="flex items-center gap-x-2">
+            <p class="text-xs uppercase tracking-wide text-gray-500">
+              TOTAL CATEGORIES
+            </p>
+          </div>
+
+          <div class="mt-1 flex items-center gap-x-2">
+            <h3 class="text-xl sm:text-2xl font-medium text-gray-800">
               29.4%
             </h3>
           </div>
@@ -105,13 +123,13 @@
       <div class="-m-1.5 overflow-x-auto">
         <div class="p-1.5 min-w-full inline-block align-middle">
           <div
-              class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-neutral-800 dark:border-neutral-700">
+              class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
             <!-- Header -->
             <div
-                class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-neutral-700">
+                class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200">
               <div>
-                <h2 class="text-xl font-semibold text-gray-800 dark:text-neutral-200">Wisata</h2>
-                <p class="text-sm text-gray-600 dark:text-neutral-400">Kelola wisata Anda di sini.</p>
+                <h2 class="text-xl font-semibold text-gray-800">Wisata</h2>
+                <p class="text-sm text-gray-600">Kelola wisata Anda di sini.</p>
               </div>
               <div>
                 <!-- Modal for adding Wisata -->
@@ -127,8 +145,8 @@
             <!-- End Header -->
 
             <!-- Table -->
-            <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
-              <thead class="bg-gray-50 dark:bg-neutral-800">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
               <tr>
                 <th scope="col" class="ps-6 py-3 text-start">ID</th>
                 <th scope="col" class="px-6 py-3 text-start">Nama</th>
@@ -136,16 +154,29 @@
                 <th scope="col" class="px-6 py-3 text-start">Dibuat</th>
               </tr>
               </thead>
-              <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
-              <tr v-for="(wisata, index) in wisata" :key="wisata.id">
-                <td class="ps-6 py-3 whitespace-nowrap">{{ index + 1 }}</td>
-                <td class="px-6 py-3 whitespace-nowrap">{{ wisata.nama }}</td>
-                <td class="px-6 py-3 whitespace-nowrap">
-                  <span
-                      class="py-1 px-2 inline-flex text-xs font-medium bg-green-100 text-green-800 rounded-full dark:bg-green-500/10 dark:text-green-500">Aktif</span>
-                </td>
-                <td class="px-6 py-3 whitespace-nowrap">{{ new Date(wisata.created_at).toDateString() }}</td>
-              </tr>
+              <tbody class="divide-y divide-gray-200">
+              <template v-if="wisata.length > 0">
+                <tr v-for="(wisata, index) in wisata" :key="wisata.id">
+                  <td class="ps-6 py-3 whitespace-nowrap">{{ index + 1 }}</td>
+                  <td class="px-6 py-3 whitespace-nowrap">{{ wisata.nama }}</td>
+                  <td class="px-6 py-3 whitespace-nowrap">
+                    <span class="py-1 px-2 inline-flex text-xs font-medium bg-green-100 text-green-800 rounded-full">Aktif</span>
+                  </td>
+                  <td class="px-6 py-3 whitespace-nowrap">{{ new Date(wisata.created_at).toDateString() }}</td>
+                </tr>
+              </template>
+
+              <template v-else-if="loading">
+                <tr>
+                  <td colspan="4" class="text-center py-3">Memuat...</td>
+                </tr>
+              </template>
+
+              <template v-else>
+                <tr>
+                  <td colspan="4" class="text-center py-3">Belum ada data</td>
+                </tr>
+              </template>
               </tbody>
             </table>
             <!-- End Table -->

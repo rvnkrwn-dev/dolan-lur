@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-full items-center py-16 dark:bg-neutral-800">
+  <div class="flex h-full items-center py-16">
     <div class="w-full max-w-md mx-auto p-6">
       <div class="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm">
         <div class="p-4 sm:p-7">
@@ -73,7 +73,8 @@
                 <!-- End Checkbox -->
 
                 <button type="submit"
-                        class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
+                        class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                        :disabled="isLoading">
                   Sign in
                 </button>
               </div>
@@ -87,18 +88,33 @@
 </template>
 
 <script setup lang="ts">
+import Swal from 'sweetalert2'
+
 const username = ref<string>('');
 const password = ref<string>('');
+const isLoading = ref<boolean>(false);
+
 const {login} = useAuth();
+
 const onSubmit = async () => {
   try {
+    isLoading.value = true;
     await login({username: username.value, password: password.value});
     navigateTo('/admin')
-
     const {useAuthUser} = useAuth()
     console.log(useAuthUser)
   } catch (err) {
+    await Swal.fire({
+      position: "top-end",
+      icon: "error",
+      title: "Failed to login",
+      toast: true,
+      showConfirmButton: false,
+      timer: 1500
+    });
     console.log(err);
+  } finally {
+    isLoading.value = false;
   }
 }
 

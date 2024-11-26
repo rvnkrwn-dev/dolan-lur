@@ -1,4 +1,4 @@
-import { decodeRefreshToken, generateToken } from "~/server/utils/jwt.ts"
+import {decodeRefreshToken, deleteRefreshToken, generateToken} from "~/server/utils/jwt.ts"
 import {User} from "~/server/model/User";
 
 export default defineEventHandler(async (event) => {
@@ -21,6 +21,7 @@ export default defineEventHandler(async (event) => {
         return { access_token: accessToken }
 
     } catch (error) {
+        deleteRefreshToken(event)
         return sendError(event, createError({
             statusCode: 500,
             statusMessage: 'Something went wrong'

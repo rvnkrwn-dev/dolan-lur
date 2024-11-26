@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-full items-center py-16 dark:bg-neutral-800">
+  <div class="flex h-full items-center py-16">
     <div class="w-full max-w-md mx-auto p-6">
       <div class="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm">
         <div class="p-4 sm:p-7">
@@ -76,6 +76,8 @@
 
 <script setup lang="ts">
 
+import Swal from "sweetalert2";
+
 const username = ref<string>('');
 const password = ref<string>('');
 const onSubmit = async () => {
@@ -87,8 +89,25 @@ const onSubmit = async () => {
         password: password.value,
       }
     })
-  } catch (err) {
+    await Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Successfully registered",
+      toast: true,
+      showConfirmButton: false,
+      timer: 1500
+    });
 
+    return navigateTo('/login')
+  } catch (err) {
+    await Swal.fire({
+      position: "top-end",
+      icon: "error",
+      title: "Failed to register",
+      toast: true,
+      showConfirmButton: false,
+      timer: 1500
+    });
   }
 }
 </script>

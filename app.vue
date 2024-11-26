@@ -9,7 +9,7 @@
 <script lang="ts" setup>
 const {initAuth} = useAuth();
 
-onBeforeMount(() => {
-  initAuth()
+onBeforeMount(async () => {
+  await initAuth()
 })
 </script>

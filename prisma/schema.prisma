@@ -16,6 +16,7 @@ model User {
   password   String
   role       Role       @default(User)
   kategori   Kategori[] // Relasi ke kategori yang dimiliki user
+  wisata     Wisata[] // Relasi ke wisata yang dimiliki user
   rating     Rating[] // Relasi ke rating yang diberikan user
   created_at DateTime   @default(now())
   updated_at DateTime   @updatedAt
@@ -46,6 +47,8 @@ model Kategori {
 // Model untuk Wisata
 model Wisata {
   id          Int      @id @default(autoincrement())
+  user_id     Int
+  user        User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
   kategori_id Int
   kategori    Kategori @relation(fields: [kategori_id], references: [id], onDelete: Cascade)
   nama        String

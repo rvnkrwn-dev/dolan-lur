@@ -41,12 +41,12 @@
     <div class="flex flex-col">
       <div class="-m-1.5 overflow-x-auto">
         <div class="p-1.5 min-w-full inline-block align-middle">
-          <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-neutral-800 dark:border-neutral-700">
+          <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
             <!-- Header -->
-            <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-neutral-700">
+            <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200">
               <div>
-                <h2 class="text-xl font-semibold text-gray-800 dark:text-neutral-200">Wisata</h2>
-                <p class="text-sm text-gray-600 dark:text-neutral-400">Kelola wisata Anda di sini.</p>
+                <h2 class="text-xl font-semibold text-gray-800">Wisata</h2>
+                <p class="text-sm text-gray-600">Kelola wisata Anda di sini.</p>
               </div>
               <div>
                 <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-scale-animation-modal" data-hs-overlay="#hs-scale-animation-modal">
@@ -55,13 +55,13 @@
                 <!-- Modal for adding Wisata -->
                 <div id="hs-scale-animation-modal" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="hs-scale-animation-modal-label">
                   <div class="hs-overlay-animation-target hs-overlay-open:scale-100 hs-overlay-open:opacity-100 scale-95 opacity-0 ease-in-out transition-all duration-200 sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
-                    <div class="w-full flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-neutral-800 dark:border-neutral-700 dark:shadow-neutral-700/70">
+                    <div class="w-full flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto">
                       <!-- Header -->
-                      <div class="flex justify-between items-center py-3 px-4 border-b dark:border-neutral-700">
-                        <h3 id="hs-scale-animation-modal-label" class="font-bold text-gray-800 dark:text-white">
+                      <div class="flex justify-between items-center py-3 px-4 border-b">
+                        <h3 id="hs-scale-animation-modal-label" class="font-bold text-gray-800">
                           Tambah Wisata
                         </h3>
-                        <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-400 dark:focus:bg-neutral-600" aria-label="Close" data-hs-overlay="#hs-scale-animation-modal">
+                        <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none" aria-label="Close" data-hs-overlay="#hs-scale-animation-modal">
                           <span class="sr-only">Close</span>
                           <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M18 6 6 18"></path>
@@ -106,8 +106,8 @@
                         </form>
                       </div>
                       <!-- Footer -->
-                      <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-neutral-700">
-                        <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" data-hs-overlay="#hs-scale-animation-modal">
+                      <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t">
+                        <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" data-hs-overlay="#hs-scale-animation-modal">
                           Close
                         </button>
                         <button type="submit" form="form-wisata" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
@@ -122,8 +122,8 @@
             <!-- End Header -->
 
             <!-- Table -->
-            <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
-              <thead class="bg-gray-50 dark:bg-neutral-800">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
               <tr>
                 <th scope="col" class="ps-6 py-3 text-start">ID</th>
                 <th scope="col" class="px-6 py-3 text-start">Nama</th>
@@ -132,17 +132,17 @@
                 <th scope="col" class="px-6 py-3 text-end">Aksi</th>
               </tr>
               </thead>
-              <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
+              <tbody class="divide-y divide-gray-200">
               <tr v-for="(wisata, index) in wisata" :key="wisata.id">
                 <td class="ps-6 py-3 whitespace-nowrap">{{index + 1}}</td>
                 <td class="px-6 py-3 whitespace-nowrap">{{wisata.nama}}</td>
                 <td class="px-6 py-3 whitespace-nowrap">
-                  <span class="py-1 px-2 inline-flex text-xs font-medium bg-green-100 text-green-800 rounded-full dark:bg-green-500/10 dark:text-green-500">Aktif</span>
+                  <span class="py-1 px-2 inline-flex text-xs font-medium bg-green-100 text-green-800 rounded-full">Aktif</span>
                 </td>
                 <td class="px-6 py-3 whitespace-nowrap">{{new Date(wisata.created_at).toDateString()}}</td>
                 <td class="px-6 py-3 whitespace-nowrap text-end">
-                  <a class="text-blue-600 hover:underline dark:text-blue-500" href="#">Edit</a>
-                  <button type="button" class="text-red-600 hover:underline dark:text-red-500 ms-4" @click="handleDelete(wisata.id)">Hapus</button>
+                  <a class="text-blue-600 hover:underline" href="#">Edit</a>
+                  <button type="button" class="text-red-600 hover:underline ms-4" @click="handleDelete(wisata.id)">Hapus</button>
                 </td>
               </tr>
               </tbody>
@@ -217,7 +217,7 @@ const handleDelete = async (id: number) => {
   if (!confirmDelete) return;
 
   try {
-    await useFetchApi(`/api/wisata/${id}`, { method: 'DELETE' });
+    await useFetchApi(`/api/auth/wisata/${id}`, { method: 'DELETE' });
     wisata.value = wisata.value.filter(w => w.id !== id);
     alert("Wisata berhasil dihapus!");
   } catch (err) {
@@ -238,7 +238,7 @@ const handleSubmit = async () => {
   }
 
   try {
-    const response = await useFetchApi('/api/wisata', {
+    const response = await useFetchApi('/api/auth/wisata', {
       method: 'POST',
       body: formData
     });

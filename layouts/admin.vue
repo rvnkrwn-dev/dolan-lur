@@ -42,6 +42,22 @@
               <NuxtLink
                   active-class="bg-gray-100"
                   class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                  to="/admin/kategori">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24">
+                  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <circle cx="17" cy="7" r="3"/>
+                    <circle cx="7" cy="17" r="3"/>
+                    <path d="M14 14h6v5a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1zM4 4h6v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/>
+                  </g>
+                </svg>
+                Kategori
+              </NuxtLink>
+            </li>
+
+            <li class="hs-accordion" id="account-accordion">
+              <NuxtLink
+                  active-class="bg-gray-100"
+                  class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
                   to="/admin/wisata">
                 <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24">
                   <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -53,22 +69,6 @@
                   </g>
                 </svg>
                 Wisata
-              </NuxtLink>
-            </li>
-
-            <li class="hs-accordion" id="account-accordion">
-              <NuxtLink
-                  active-class="bg-gray-100"
-                  class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-                  to="/admin/kategori">
-                <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24">
-                  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                    <circle cx="17" cy="7" r="3"/>
-                    <circle cx="7" cy="17" r="3"/>
-                    <path d="M14 14h6v5a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1zM4 4h6v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/>
-                  </g>
-                </svg>
-                Kategori
               </NuxtLink>
             </li>
 

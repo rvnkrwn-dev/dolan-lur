@@ -6,11 +6,11 @@ import {User} from "~/server/model/User";
 export default defineEventHandler(async (event) => {
     const endpoints = [
         '/api/auth/user',
+        '/api/auth/kategori'
     ]
 
     const isHandledByThisMiddleware = endpoints.some(endopoint => {
         const pattern = new UrlPattern(endopoint)
-
         return pattern.match(event.req.url)
     })
 
