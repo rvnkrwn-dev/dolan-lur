@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 const config = useRuntimeConfig()
+console.log(config)
 const generateRefreshToken = (payload) => {
     return jwt.sign(payload, config.REFRESH_TOKEN_SECRET, {
         expiresIn: '4h',

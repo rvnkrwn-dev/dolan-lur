@@ -104,8 +104,5 @@ export default defineNuxtConfig({
             nitroHeaders: true,  // Menambahkan header Nitro untuk serverless
             exportToPresets: true,  // Mengekspor untuk preset tertentu
         },
-
-        // Mengaktifkan Subresource Integrity (SRI) untuk skrip dan gaya
-        sri: true,
     }
 })

@@ -56,8 +56,9 @@ export default () => {
                 resolve(true);
                 isLoggedIn().value = true
             } catch (error) {
-                await logout();
-                isLoggedIn().value = false
+                setToken(null);
+                setUser(null);
+                isLoggedIn().value = null;
                 resolve(false); // Pastikan tetap resolve meskipun refresh gagal
             }
         });
