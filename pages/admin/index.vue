@@ -182,7 +182,11 @@ definePageMeta({
 })
 
 const wisata = ref([]);
-const stats = ref({});
+const stats = ref({
+  users: 0,
+  destination: 0,
+  categories: 0
+});
 const loading = ref(false);
 const error = ref(null);
 
