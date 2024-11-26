@@ -21,7 +21,7 @@
           <div class="flex flex-col">
             <select v-model="selectedCategory" @change="filterWisata" id="category"
                     class="mt-2 block w-full sm:w-64 px-4 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
-              <option selected>All Categories</option>
+              <option value="" selected>All Categories</option>
               <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.nama }}</option>
             </select>
           </div>
@@ -52,7 +52,7 @@
 
       <!-- Grid -->
       <div v-if="!loading && !error" class="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <NuxtLink v-for="item in wisata" :key="item.id" class="group relative block rounded-xl border border-gray-200 hover:border-transparent hover:shadow-lg focus:outline-none focus:border-transparent focus:shadow-lg transition-all">
+        <NuxtLink v-for="item in wisata"  :to="'/destinations/' + item.id" :key="item.id" class="group relative block rounded-xl border border-gray-200 hover:border-transparent hover:shadow-lg focus:outline-none focus:border-transparent focus:shadow-lg transition-all">
           <div class="relative h-52">
             <!-- Gambar pertama dari array gambar -->
             <img :src="'/api/images/' + item.gambar[0].filename" :alt="item.nama" class="w-full h-full object-cover rounded-xl"/>
