@@ -147,16 +147,16 @@
               </tr>
               </thead>
               <tbody class="divide-y divide-gray-200">
-              <tr v-for="(wisata, index) in wisata" :key="wisata.id">
+              <tr v-for="(w, index) in wisata" :key="w.id">
                 <td class="ps-6 py-3 whitespace-nowrap">{{index + 1}}</td>
-                <td class="px-6 py-3 whitespace-nowrap">{{wisata.nama}}</td>
+                <td class="px-6 py-3 whitespace-nowrap">{{w.nama}}</td>
                 <td class="px-6 py-3 whitespace-nowrap">
                   <span class="py-1 px-2 inline-flex text-xs font-medium bg-green-100 text-green-800 rounded-full">Aktif</span>
                 </td>
-                <td class="px-6 py-3 whitespace-nowrap">{{new Date(wisata.created_at).toDateString()}}</td>
+                <td class="px-6 py-3 whitespace-nowrap">{{new Date(w.created_at).toDateString()}}</td>
                 <td class="px-6 py-3 whitespace-nowrap text-end">
-                  <a class="text-blue-600 hover:underline" href="#">Edit</a>
-                  <button type="button" class="text-red-600 hover:underline ms-4" @click="handleDelete(wisata.id)">Hapus</button>
+                  <NuxtLink class="text-blue-600 hover:underline" :to="`/admin/wisata/${w.id}`">Edit</NuxtLink>
+                  <button type="button" class="text-red-600 hover:underline ms-4" @click="handleDelete(w.id)">Hapus</button>
                 </td>
               </tr>
               </tbody>
