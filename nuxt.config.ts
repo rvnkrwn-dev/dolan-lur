@@ -7,6 +7,9 @@ export default defineNuxtConfig({
     runtimeConfig: {
         REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
         ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
+        CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
+        CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
+        CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
     },
     security: {
         // Pengaturan untuk CORS
@@ -14,8 +17,8 @@ export default defineNuxtConfig({
             // Daftar asal yang diizinkan untuk mengakses API dan sumber daya sensitif
             origin: ['http://localhost:3000', 'https://dolan-lur.vercel.app'],
             methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Metode HTTP yang diizinkan
-            allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],  // Header yang diizinkan
-            exposedHeaders: ['X-Custom-Header'],  // Header yang dapat diakses oleh browser
+            allowHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],  // Header yang diizinkan
+            exposeHeaders: ['X-Custom-Header'],  // Header yang dapat diakses oleh browser
             preflight: {
                 statusCode: 204  // Status code untuk permintaan preflight CORS
             },
@@ -85,7 +88,6 @@ export default defineNuxtConfig({
         // Pengaturan CSRF
         csrf: {
             enabled: false,  // Mengaktifkan perlindungan CSRF
-            nonce: false,  // Menambahkan nonce untuk permintaan yang aman
         },
 
         // Pengaturan untuk menyembunyikan log atau informasi sensitif

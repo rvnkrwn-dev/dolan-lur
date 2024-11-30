@@ -6,7 +6,7 @@ interface GambarType {
 }
 
 export class Gambar {
-    static createGambar = (data: GambarType) => {
+    static createGambar = (data: { wisata_id: any; url: string }) => {
         return prisma.gambar.create({
             data,
         });

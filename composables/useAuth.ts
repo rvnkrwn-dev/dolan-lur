@@ -4,77 +4,74 @@ export default () => {
     // Hooks untuk state autentikasi
     const useAuthToken = () => useCookie('auth_token');
     const useAuthUser = () => useCookie('auth_user');
-    const useAuthLoading = () => useState('auth_loading', () => true);
-    const isLoggedIn = () => useCookie('isLoggedIn')
+    const useAuthLoading = () => useState('auth_loading', () => false); // Default loading ke false
+    const isLoggedIn = () => useCookie('isLoggedIn');
 
-    // Set token baru
-    const setToken = (newToken) => {
+    // Set token
+    const setToken = (newToken: string | null) => {
         const authToken = useAuthToken();
         authToken.value = newToken;
     };
 
-    // Set user baru
-    const setUser = (newUser) => {
+    // Set data user
+    const setUser = (newUser: object | null) => {
         const authUser = useAuthUser();
-        authUser.value = newUser;
+        authUser.value = newUser ? JSON.stringify(newUser) : null;
     };
 
     // Set status loading autentikasi
-    const setIsAuthLoading = (value) => {
+    const setAuthLoading = (value: boolean) => {
         const authLoading = useAuthLoading();
         authLoading.value = value;
     };
 
-    // Fungsi login dengan username dan password
-    const login = ({ username, password }) => {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const data = await useFetchApi('/api/auth/login', {
-                    method: 'POST',
-                    body: { username, password }
-                });
+    // Fungsi login
+    const login = async ({ username, password }: { username: string; password: string }) => {
+        try {
+            const data: any = await useFetchApi('/api/auth/login', {
+                method: 'POST',
+                body: { username, password }
+            });
 
-                // Set token dan user yang diterima setelah login
-                setToken(data.access_token);
-                setUser(data.user);
+            // Set token dan user setelah login
+            setToken(data.access_token);
+            setUser(data.user);
 
-                // Tandai user sudah login
-                isLoggedIn().value = true
-                resolve(true);
-            } catch (error) {
-                reject(error);
-            }
-        });
+            // Tandai user sudah login
+            isLoggedIn().value = String(true);
+            return true;
+        } catch (error) {
+            console.error("Terjadi kesalahan saat login:", error);
+            throw new Error("Login gagal. Silakan coba lagi.");
+        }
     };
 
-    // Fungsi untuk refresh token
-    const refreshToken = () => {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const data = await useFetchApi('/api/auth/refresh');
-                setToken(data.access_token);
-                resolve(true);
-                isLoggedIn().value = true
-            } catch (error) {
-                setToken(null);
-                setUser(null);
-                isLoggedIn().value = null;
-                resolve(false); // Pastikan tetap resolve meskipun refresh gagal
-            }
-        });
+    // Fungsi refresh token
+    const refreshToken = async () => {
+        try {
+            const data: any = await useFetchApi('/api/auth/refresh');
+            setToken(data.access_token);
+            isLoggedIn().value = String(true); // Pastikan isLoggedIn diupdate
+            return true;
+        } catch (error) {
+            // Reset token dan user jika refresh gagal
+            setToken(null);
+            setUser(null);
+            isLoggedIn().value = String(false); // Tandai sebagai tidak login
+            return false;
+        }
     };
 
     // Fungsi untuk mengambil data user
-    const getUser = () => {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const data = await useFetchApi('/api/auth/user');
-                setUser(data.user);
-                resolve(true);
-            } catch (error) {
-                reject(error);
-            }
-        });
+    const getUser = async () => {
+        try {
+            const data: any = await useFetchApi('/api/auth/user');
+            setUser(data.user);
+            return true;
+        } catch (error) {
+            console.error("Terjadi kesalahan saat mengambil data user:", error);
+            throw new Error("Gagal mengambil data user.");
+        }
     };
 
     // Refresh token secara otomatis sebelum kadaluarsa
@@ -82,52 +79,56 @@ export default () => {
         const authToken = useAuthToken();
         if (!authToken.value) return;
 
-        const jwt = jwtDecode(authToken.value);
-        const newRefreshTime = jwt.exp * 1000 - Date.now() - 60000; // Waktu refresh sebelum 1 menit token kadaluarsa
+        try {
+            const jwt: any = jwtDecode(authToken.value);
+            const newRefreshTime = jwt.exp * 1000 - Date.now() - 60000; // Waktu refresh 1 menit sebelum kadaluarsa
 
-        setTimeout(async () => {
-            const refreshSuccess = await refreshToken(); // Periksa hasil refresh token
-            if (refreshSuccess) {
-                reRefreshAccessToken(); // Recurse to keep refreshing
-            }
-        }, newRefreshTime);
+            setTimeout(async () => {
+                const refreshSuccess = await refreshToken(); // Cek keberhasilan refresh
+                if (refreshSuccess) {
+                    reRefreshAccessToken(); // Lakukan refresh berulang
+                }
+            }, newRefreshTime);
+        } catch (error) {
+            console.error("Terjadi kesalahan saat mendekode JWT:", error);
+            logout(); // Logout jika ada masalah dengan JWT
+        }
     };
 
     // Inisialisasi autentikasi saat aplikasi dimulai
-    const initAuth = () => {
-        return new Promise(async (resolve, reject) => {
-            setIsAuthLoading(true);
-            try {
-                await refreshToken()
-                await getUser()
-
-                reRefreshAccessToken()
-
-                resolve(true)
-            } catch (error) {
-                reject(error)
-            } finally {
-                setIsAuthLoading(false)
+    const initAuth = async () => {
+        setAuthLoading(true);
+        try {
+            if (!isLoggedIn().value) {
+                return false;
             }
-        });
+            await refreshToken();
+            await getUser();
+            reRefreshAccessToken(); // Mulai refresh token otomatis
+            return true;
+        } catch (error) {
+            console.error('Terjadi kesalahan saat inisialisasi autentikasi:', error);
+            throw new Error("Gagal menginisialisasi autentikasi.");
+        } finally {
+            setAuthLoading(false); // Matikan loading setelah proses selesai
+        }
     };
 
     // Fungsi logout dan menghapus data autentikasi
-    const logout = () => {
-        return new Promise(async (resolve, reject) => {
-            try {
-                await useFetchApi('/api/auth/logout', { method: 'POST' });
+    const logout = async () => {
+        try {
+            await useFetchApi('/api/auth/logout', { method: 'POST' });
 
-                // Clear token dan user
-                setToken(null);
-                setUser(null);
-                isLoggedIn().value = null;
-                resolve();
-            } catch (error) {
-                isLoggedIn().value = null; // Clear cookie even if logout fails
-                reject(error);
-            }
-        });
+            // Hapus token dan user
+            setToken(null);
+            setUser(null);
+            isLoggedIn().value = String(false); // Tandai sebagai tidak login
+            return true;
+        } catch (error) {
+            console.error("Terjadi kesalahan saat logout:", error);
+            isLoggedIn().value = String(false); // Pastikan cookie dihapus meskipun logout gagal
+            throw new Error("Logout gagal.");
+        }
     };
 
     return {

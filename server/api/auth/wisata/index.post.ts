@@ -1,8 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-import { Wisata } from '~/server/model/Wisata';
-import { Gambar } from '~/server/model/Gambar';
-import { fileURLToPath } from 'url';
+import {Wisata} from '~/server/model/Wisata';
+import {Gambar} from '~/server/model/Gambar';
+import cloudinary from '~/server/utils/cloud';
 
 export default defineEventHandler(async (event) => {
     try {
@@ -10,92 +8,113 @@ export default defineEventHandler(async (event) => {
         const userId = event.context.auth?.user?.id;
         if (!userId) {
             setResponseStatus(event, 401);
-            return { code: 401, message: 'User not authenticated.' };
+            return {code: 401, message: 'User not authenticated.'};
         }
 
         // Membaca form data multipart
         const formData = await readMultipartFormData(event);
-        const fields: { [key: string]: string } = {};
-        const files: { name: string; type: string; data: Buffer }[] = [];
+        const fields: Record<string, string> = {};
+        const files: Array<{ name: string; type: string; data: Buffer }> = [];
 
-        // Memisahkan fields dan files dari formData
+        if (!formData || !Array.isArray(formData)) {
+            setResponseStatus(event, 400);
+            return {code: 400, message: 'Invalid or empty form data.'};
+        }
+
+        // Menangani data form
         for (const field of formData) {
-            const { name, data, filename, type } = field;
+            const {name, data, filename, type} = field;
 
-            if (filename) {
-                files.push({ name: filename, type, data });
+            if (filename && type) {
+                // Assume filename is provided and push to files array
+                files.push({name: filename, type, data});
             } else {
-                fields[name] = data.toString();
+                // Validate name is a string before using it as a key
+                if (name) {
+                    fields[name] = data.toString();
+                } else {
+                    console.error('Field name is undefined or not a string');
+                }
             }
         }
 
         // Mendapatkan field yang diperlukan
-        const { kategori_id, nama, deskripsi, lokasi, jam, harga } = fields;
+        const {kategori_id, nama, deskripsi, lokasi, jam, harga} = fields as {
+            kategori_id: string;
+            nama: string;
+            deskripsi: string;
+            lokasi: string;
+            jam: string;
+            harga: string;
+        };
 
         // Validasi data
         if (!kategori_id || !nama || !deskripsi || !lokasi || !jam) {
             setResponseStatus(event, 400);
-            return { code: 400, message: 'Please provide all required fields.' };
+            return {code: 400, message: 'Please provide all required fields.'};
         }
 
         // Simpan data Wisata ke database
         const wisataData = {
-            kategori_id: parseInt(kategori_id),
+            kategori_id: parseInt(kategori_id, 10),
             nama,
             deskripsi,
             lokasi,
             jam,
-            harga: parseInt(harga),
-            user_id: userId // Menggunakan user_id dari autentikasi
+            harga: harga ? parseInt(harga, 10) : 0,
+            user_id: userId,
         };
         const wisata = await Wisata.createWisata(wisataData);
 
-        // Direktori upload gambar
-        const uploadsDir = path.join(process.cwd(), 'uploads'); // error di vercel
-        // const __filename = fileURLToPath(import.meta.url);
-        // const __dirname = path.dirname(__filename);
-        //
-        // // Path untuk 'uploads' di proyek lokal
-        // const uploadsDir = path.join(__dirname, '..', 'uploads');
-        if (!fs.existsSync(uploadsDir)) {
-            fs.mkdirSync(uploadsDir, { recursive: true });
-        }
-
         const gambarResults = [];
 
-        // Menangani pengunggahan gambar
-        const gambarFiles = Array.isArray(files) ? files : [files]; // Memastikan files adalah array
-
-        for (const file of gambarFiles) {
-            const { name, type, data } = file;
+        // Menangani pengunggahan gambar ke Cloudinary
+        for (const file of files) {
+            const {name, type, data} = file;
 
             if (!type.startsWith('image/')) {
+                console.warn(`File ${name} is not an image. Skipping.`);
                 continue; // Abaikan file yang bukan gambar
             }
 
-            const filename = `${Date.now()}-${path.basename(name)}`;
-            const filePath = path.join(uploadsDir, filename);
+            // Unggah gambar ke Cloudinary
+            const cloudinaryResponse = await cloudinary.uploader
+                .upload(data.toString(), {
+                    public_id: name,
+                    resource_type: 'image',
+                })
+                .catch((error) => {
+                    console.error('Cloudinary upload error:', error);
+                    return null; // Log the error and return null for failure
+                });
 
-            // Menyimpan file gambar ke server
-            await fs.promises.writeFile(filePath, data);
-
-            // Simpan data gambar ke database
-            const gambarData = { wisata_id: wisata.id, filename };
-            const gambar = await Gambar.createGambar(gambarData);
-            gambarResults.push(gambar);
+            if (cloudinaryResponse) {
+                // Simpan data gambar ke database
+                const gambarData = {
+                    wisata_id: wisata.id,
+                    url: cloudinaryResponse.secure_url,
+                };
+                const gambar = await Gambar.createGambar(gambarData);
+                gambarResults.push(gambar);
+            } else {
+                console.error('Failed to upload image to Cloudinary.');
+            }
         }
 
         setResponseStatus(event, 201);
         return {
             code: 201,
             message: 'Wisata berhasil ditambahkan!',
-            data: { wisata, gambar: gambarResults },
+            data: {wisata, gambar: gambarResults},
         };
-    } catch (error) {
-        console.error('Error:', error);
+    } catch (error: any) {
+        console.error('Error occurred during the request:', error);
         return sendError(
             event,
-            createError({ statusCode: 500, statusMessage: error.message || 'Internal Server Error' })
+            createError({
+                statusCode: 500,
+                statusMessage: error?.message || 'Internal Server Error',
+            })
         );
     }
 });

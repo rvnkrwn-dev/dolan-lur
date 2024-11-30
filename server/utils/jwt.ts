@@ -1,19 +1,19 @@
 import jwt from 'jsonwebtoken';
 
 const config = useRuntimeConfig()
-const generateRefreshToken = (payload) => {
+const generateRefreshToken = (payload: any) => {
     return jwt.sign(payload, config.REFRESH_TOKEN_SECRET, {
         expiresIn: '4h',
     })
 }
 
-const generateAccessToken = (payload) => {
+const generateAccessToken = (payload: any) => {
     return jwt.sign(payload, config.ACCESS_TOKEN_SECRET, {
         expiresIn: '10m',
     })
 }
 
-export const generateToken = (payload) => {
+export const generateToken = (payload: any) => {
     const refreshToken = generateRefreshToken(payload);
     const accessToken = generateAccessToken(payload);
 

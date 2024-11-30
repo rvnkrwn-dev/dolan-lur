@@ -4,7 +4,8 @@
       <div class="col-span-full hidden lg:col-span-1 lg:block">
         <a class="flex-none font-semibold text-xl text-black focus:outline-none focus:opacity-80" href="#"
            aria-label="Brand">Dolan Lur.</a>
-        <p class="mt-3 text-xs sm:text-sm text-gray-600">Situs rekomendasi destinasi wisata menarik di Banyumas, memudahkan Anda menemukan tempat seru untuk liburan.</p>
+        <p class="mt-3 text-xs sm:text-sm text-gray-600">Situs rekomendasi destinasi wisata menarik di Banyumas,
+          memudahkan Anda menemukan tempat seru untuk liburan.</p>
       </div>
 
       <div>

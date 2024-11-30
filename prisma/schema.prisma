@@ -40,8 +40,8 @@ model Kategori {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  @@map("categories")
   @@index([user_id]) // Indeks untuk user_id
+  @@map("categories")
 }
 
 // Model untuk Wisata
@@ -52,6 +52,7 @@ model Wisata {
   kategori_id Int
   kategori    Kategori @relation(fields: [kategori_id], references: [id], onDelete: Cascade)
   nama        String
+  slug        String   @unique
   deskripsi   String   @db.Text
   harga       Int
   carousel    Boolean  @default(false)
@@ -62,8 +63,8 @@ model Wisata {
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
 
-  @@map("places")
   @@index([kategori_id]) // Indeks untuk kategori_id
+  @@map("places")
 }
 
 // Model untuk Gambar wisata
@@ -75,8 +76,8 @@ model Gambar {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  @@map("images")
   @@index([wisata_id]) // Indeks untuk wisata_id
+  @@map("images")
 }
 
 // Model untuk Rating
@@ -91,6 +92,6 @@ model Rating {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  @@map("ratings")
   @@index([user_id, wisata_id]) // Indeks gabungan untuk performa
+  @@map("ratings")
 }
