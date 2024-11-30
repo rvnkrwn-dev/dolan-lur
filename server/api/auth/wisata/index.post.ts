@@ -1,5 +1,5 @@
-import {Wisata} from '~/server/model/Wisata';
-import {Gambar} from '~/server/model/Gambar';
+import { Wisata } from '~/server/model/Wisata';
+import { Gambar } from '~/server/model/Gambar';
 import cloudinary from '~/server/utils/cloud';
 
 export default defineEventHandler(async (event) => {
@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
         const userId = event.context.auth?.user?.id;
         if (!userId) {
             setResponseStatus(event, 401);
-            return {code: 401, message: 'User not authenticated.'};
+            return { code: 401, message: 'User not authenticated.' };
         }
 
         // Membaca form data multipart
@@ -18,18 +18,18 @@ export default defineEventHandler(async (event) => {
 
         if (!formData || !Array.isArray(formData)) {
             setResponseStatus(event, 400);
-            return {code: 400, message: 'Invalid or empty form data.'};
+            return { code: 400, message: 'Invalid or empty form data.' };
         }
 
         // Menangani data form
         for (const field of formData) {
-            const {name, data, filename, type} = field;
+            const { name, data, filename, type } = field;
 
             if (filename && type) {
-                // Assume filename is provided and push to files array
-                files.push({name: filename, type, data});
+                // Pastikan data adalah buffer dan file memiliki nama dan tipe
+                files.push({ name: filename, type, data });
             } else {
-                // Validate name is a string before using it as a key
+                // Validasi nama field sebelum menggunakan sebagai key
                 if (name) {
                     fields[name] = data.toString();
                 } else {
@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
         }
 
         // Mendapatkan field yang diperlukan
-        const {kategori_id, nama, deskripsi, lokasi, jam, harga} = fields as {
+        const { kategori_id, nama, deskripsi, lokasi, jam, harga } = fields as {
             kategori_id: string;
             nama: string;
             deskripsi: string;
@@ -48,17 +48,17 @@ export default defineEventHandler(async (event) => {
             harga: string;
         };
 
-        // Validasi data
+        // Validasi data form yang diperlukan
         if (!kategori_id || !nama || !deskripsi || !lokasi || !jam) {
             setResponseStatus(event, 400);
-            return {code: 400, message: 'Please provide all required fields.'};
+            return { code: 400, message: 'Please provide all required fields.' };
         }
 
         // Simpan data Wisata ke database
         const wisataData = {
             kategori_id: parseInt(kategori_id, 10),
             nama,
-            slug: nama.split(' ').join(),
+            slug: nama.split(' ').join('-'),  // Gantilah spasi dengan tanda "-"
             deskripsi,
             lokasi,
             jam,
@@ -71,7 +71,7 @@ export default defineEventHandler(async (event) => {
 
         // Menangani pengunggahan gambar ke Cloudinary
         for (const file of files) {
-            const {name, type, data} = file;
+            const { name, type, data } = file;
 
             if (!type.startsWith('image/')) {
                 console.warn(`File ${name} is not an image. Skipping.`);
@@ -79,26 +79,40 @@ export default defineEventHandler(async (event) => {
             }
 
             // Unggah gambar ke Cloudinary
-            const cloudinaryResponse = await cloudinary.uploader
-                .upload(data.toString(), {
-                    public_id: name,
-                    resource_type: 'image',
-                })
-                .catch((error) => {
-                    console.error('Cloudinary upload error:', error);
-                    return null; // Log the error and return null for failure
+            try {
+                const cloudinaryResponse = await new Promise((resolve, reject) => {
+                    cloudinary.uploader
+                        .upload_stream(
+                            {
+                                public_id: name, // Menggunakan nama file yang diberikan
+                                resource_type: 'image', // Pastikan jenis file adalah image
+                            },
+                            (error, result) => {
+                                if (error) {
+                                    reject(error);
+                                } else {
+                                    resolve(result);
+                                }
+                            }
+                        )
+                        .end(data); // Mengirim buffer gambar ke Cloudinary
                 });
 
-            if (cloudinaryResponse) {
-                // Simpan data gambar ke database
-                const gambarData = {
-                    wisata_id: wisata.id,
-                    url: cloudinaryResponse.secure_url,
-                };
-                const gambar = await Gambar.createGambar(gambarData);
-                gambarResults.push(gambar);
-            } else {
-                console.error('Failed to upload image to Cloudinary.');
+                if (cloudinaryResponse) {
+
+                    console.log(cloudinaryResponse?.secure_url)
+                    // Simpan data gambar ke database
+                    const gambarData = {
+                        wisata_id: wisata.id,
+                        url: cloudinaryResponse?.secure_url ?? "",
+                    };
+                    const gambar = await Gambar.createGambar(gambarData);
+                    gambarResults.push(gambar);
+                } else {
+                    console.error('Failed to upload image to Cloudinary.');
+                }
+            } catch (error) {
+                console.error('Cloudinary upload error:', error);
             }
         }
 
@@ -106,7 +120,7 @@ export default defineEventHandler(async (event) => {
         return {
             code: 201,
             message: 'Wisata berhasil ditambahkan!',
-            data: {wisata, gambar: gambarResults},
+            data: { wisata, gambar: gambarResults },
         };
     } catch (error: any) {
         console.error('Error occurred during the request:', error);
