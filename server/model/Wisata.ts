@@ -1,8 +1,9 @@
-import { prisma } from "../config/db";
+import {prisma} from "../config/db";
 
 interface WisataType {
     kategori_id: number;
     nama: string;
+    slug: string;
     deskripsi: string;
     lokasi: string;
     jam: string;
@@ -18,14 +19,14 @@ export class Wisata {
 
     static updateWisata = (id: number, data: Partial<WisataType>) => {
         return prisma.wisata.update({
-            where: { id },
+            where: {id},
             data,
         });
     };
 
     static getWisataById = (id: number) => {
         return prisma.wisata.findUnique({
-            where: { id },
+            where: {id},
             include: {
                 gambar: true,      // Mengambil gambar terkait dengan wisata
                 rating: true,      // Mengambil rating terkait dengan wisata
@@ -44,7 +45,7 @@ export class Wisata {
 
     static deleteWisata = (id: number) => {
         return prisma.wisata.delete({
-            where: { id },
+            where: {id},
         });
     };
 

@@ -58,6 +58,7 @@ export default defineEventHandler(async (event) => {
         const wisataData = {
             kategori_id: parseInt(kategori_id, 10),
             nama,
+            slug: nama.split(' ').join(),
             deskripsi,
             lokasi,
             jam,
