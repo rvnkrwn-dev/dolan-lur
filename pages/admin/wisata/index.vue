@@ -1,41 +1,4 @@
 <template>
-  <!-- Breadcrumb -->
-  <div class="sticky top-0 inset-x-0 z-20 bg-white border-y px-4 sm:px-6 lg:px-8 lg:hidden">
-    <div class="flex items-center py-2">
-      <!-- Navigation Toggle -->
-      <button type="button"
-              class="size-8 flex justify-center items-center gap-x-2 border border-gray-200 text-gray-800 hover:text-gray-500 rounded-lg focus:outline-none focus:text-gray-500 disabled:opacity-50 disabled:pointer-events-none"
-              aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-application-sidebar"
-              aria-label="Toggle navigation" data-hs-overlay="#hs-application-sidebar">
-        <span class="sr-only">Toggle Navigation</span>
-        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect width="18" height="18" x="3" y="3" rx="2"/>
-          <path d="M15 3v18"/>
-          <path d="m8 9 3 3-3 3"/>
-        </svg>
-      </button>
-      <!-- End Navigation Toggle -->
-
-      <!-- Breadcrumb -->
-      <ol class="ms-3 flex items-center whitespace-nowrap">
-        <li class="flex items-center text-sm text-gray-800">
-          Application Layout
-          <svg class="shrink-0 mx-3 overflow-visible size-2.5 text-gray-400" width="16" height="16" viewBox="0 0 16 16"
-               fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5 1L10.6869 7.16086C10.8637 7.35239 10.8637 7.64761 10.6869 7.83914L5 14" stroke="currentColor"
-                  stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </li>
-        <li class="text-sm font-semibold text-gray-800 truncate" aria-current="page">
-          Wisata
-        </li>
-      </ol>
-      <!-- End Breadcrumb -->
-    </div>
-  </div>
-  <!-- End Breadcrumb -->
-
   <!-- Add Wisata Modal -->
   <div class="w-full px-4 pt-10 sm:px-6 md:px-8 lg:ps-72">
     <div class="flex flex-col">
@@ -49,88 +12,7 @@
                 <p class="text-sm text-gray-600">Kelola wisata Anda di sini.</p>
               </div>
               <div>
-                <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700" aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-scale-animation-modal" data-hs-overlay="#hs-scale-animation-modal">
-                  Tambah Wisata
-                </button>
-                <!-- Modal for adding Wisata -->
-                <div id="hs-scale-animation-modal" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none" role="dialog" tabindex="-1" aria-labelledby="hs-scale-animation-modal-label">
-                  <div class="hs-overlay-animation-target hs-overlay-open:scale-100 hs-overlay-open:opacity-100 scale-95 opacity-0 ease-in-out transition-all duration-200 sm:max-w-lg sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex items-center">
-                    <div class="w-full flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto">
-                      <!-- Header -->
-                      <div class="flex justify-between items-center py-3 px-4 border-b">
-                        <h3 id="hs-scale-animation-modal-label" class="font-bold text-gray-800">
-                          Tambah Wisata
-                        </h3>
-                        <button type="button" class="size-8 inline-flex justify-center items-center gap-x-2 rounded-full border border-transparent bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none" aria-label="Close" data-hs-overlay="#hs-scale-animation-modal">
-                          <span class="sr-only">Close</span>
-                          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M18 6 6 18"></path>
-                            <path d="m6 6 12 12"></path>
-                          </svg>
-                        </button>
-                      </div>
-                      <!-- Body -->
-                      <div class="p-4 overflow-y-auto">
-                        <form id="form-wisata" @submit.prevent="handleSubmit">
-                          <div class="max-w-sm">
-                            <label for="kategori-wisata">Kategori :</label>
-                            <select v-model="kategori_id" id="kategori-wisata" class="py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                              <option v-for="kategori in kategori" :value="kategori.id" :key="kategori.id">{{ kategori.nama }}</option>
-                            </select>
-                          </div>
-
-                          <div class="max-w-sm mt-4">
-                            <label for="nama-wisata">Nama :</label>
-                            <input v-model="name" type="text" id="nama-wisata" class="py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Pantai" required>
-                          </div>
-
-                          <div class="max-w-sm mt-4">
-                            <label for="deskripsi-wisata">Deskripsi :</label>
-                            <textarea v-model="deskripsi" id="deskripsi-wisata" class="py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Deskripsi Wisata" required></textarea>
-                          </div>
-
-                          <div class="max-w-sm mt-4">
-                            <label for="lokasi-wisata">Lokasi :</label>
-                            <input v-model="lokasi" type="text" id="lokasi-wisata" class="py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Lokasi Wisata" required>
-                          </div>
-
-                          <div class="max-w-sm mt-4">
-                            <label for="jam-wisata">Jam :</label>
-                            <input v-model="jam" type="text" id="jam-wisata" class="py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Jam Buka" required>
-                          </div>
-
-                          <div class="max-w-sm mt-4">
-                            <label for="harga-wisata">Harga :</label>
-                            <input v-model="harga" type="text" id="harga-wisata" class="py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Jam Buka" required>
-                          </div>
-
-                          <div class="max-w-sm mt-4">
-                            <label for="gambar-wisata">Gambar :</label>
-                            <input type="file" id="gambar-wisata" @change="handleFileChange" accept="image/*">
-                          </div>
-
-                          <div v-if="gambar.length" class="mt-4">
-                            <div v-for="(file, index) in gambar" :key="index" class="relative inline-block mr-2 mb-2">
-                              <img :src="file.preview" alt="Preview" class="w-24 h-24 object-cover rounded-md">
-                              <button type="button" @click="removeImage(index)" class="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6 flex justify-center items-center text-xs">
-                                X
-                              </button>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-                      <!-- Footer -->
-                      <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t">
-                        <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" data-hs-overlay="#hs-scale-animation-modal">
-                          Close
-                        </button>
-                        <button type="submit" form="form-wisata" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-                          Simpan
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <ModalAddWisata :kategori="kategori" @addWisata="(r) => handleAdd(r)"/>
               </div>
             </div>
             <!-- End Header -->
@@ -141,22 +23,30 @@
               <tr>
                 <th scope="col" class="ps-6 py-3 text-start">ID</th>
                 <th scope="col" class="px-6 py-3 text-start">Nama</th>
-                <th scope="col" class="px-6 py-3 text-start">Status</th>
+                <th scope="col" class="px-6 py-3 text-start">Kategori</th>
+                <th scope="col" class="px-6 py-3 text-start">rating</th>
                 <th scope="col" class="px-6 py-3 text-start">Dibuat</th>
                 <th scope="col" class="px-6 py-3 text-end">Aksi</th>
               </tr>
               </thead>
               <tbody class="divide-y divide-gray-200">
               <tr v-for="(w, index) in wisata" :key="w.id">
-                <td class="ps-6 py-3 whitespace-nowrap">{{index + 1}}</td>
-                <td class="px-6 py-3 whitespace-nowrap">{{w.nama}}</td>
+                <td class="ps-6 py-3 whitespace-nowrap">{{ index + 1 }}</td>
+                <td class="px-6 py-3 whitespace-nowrap">{{ w.nama }}</td>
                 <td class="px-6 py-3 whitespace-nowrap">
-                  <span class="py-1 px-2 inline-flex text-xs font-medium bg-green-100 text-green-800 rounded-full">Aktif</span>
+                  {{ w.kategori.nama }}
                 </td>
-                <td class="px-6 py-3 whitespace-nowrap">{{new Date(w.created_at).toDateString()}}</td>
-                <td class="px-6 py-3 whitespace-nowrap text-end">
-                  <NuxtLink class="text-blue-600 hover:underline" :to="`/admin/wisata/${w.id}`">Edit</NuxtLink>
-                  <button type="button" class="text-red-600 hover:underline ms-4" @click="handleDelete(w.id)">Hapus</button>
+                <td class="px-6 py-3 whitespace-nowrap">
+                  {{ w.rating.length > 0 ? w.rating.length : 'N/A' }}
+                </td>
+                <td class="px-6 py-3 whitespace-nowrap">{{ new Date(w.created_at).toDateString() }}</td>
+                <td class="px-6 py-3 whitespace-nowrap flex items-center justify-end gap-x-2">
+                  <NuxtLink class="text-blue-600" :to="`/admin/wisata/${w.id}`">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="currentColor"><path d="M16.607 3.005a2.57 2.57 0 0 1 3.64-.001l.75.751a2.57 2.57 0 0 1 0 3.637l-7.6 7.604a2.57 2.57 0 0 1-1.819.754H9a.75.75 0 0 1-.75-.75v-2.562c0-.682.27-1.336.752-1.818z"/><path d="M11.943 2.25H12a.75.75 0 0 1 0 1.5c-2.143 0-3.674.002-4.838.158c-1.142.154-1.817.444-2.314.94c-.496.497-.786 1.172-.94 2.314C3.752 8.326 3.75 9.857 3.75 12s.002 3.674.158 4.838c.154 1.142.444 1.817.94 2.314c.497.496 1.172.786 2.314.94c1.164.156 2.695.158 4.838.158s3.674-.002 4.838-.158c1.142-.154 1.817-.444 2.314-.94c.496-.497.786-1.172.94-2.314c.156-1.164.158-2.696.158-4.838a.75.75 0 0 1 1.5 0v.057c0 2.073 0 3.705-.171 4.98c-.176 1.31-.545 2.354-1.367 3.175c-.821.822-1.866 1.19-3.174 1.367c-1.276.171-2.908.171-4.981.171h-.114c-2.073 0-3.705 0-4.98-.171c-1.31-.176-2.354-.545-3.175-1.367c-.822-.821-1.19-1.866-1.367-3.174c-.171-1.276-.171-2.908-.171-4.981v-.114c0-2.073 0-3.705.171-4.98c.176-1.31.545-2.354 1.367-3.175c.821-.822 1.866-1.19 3.174-1.367c1.276-.171 2.908-.171 4.981-.171"/></g></svg>
+                  </NuxtLink>
+                  <button type="button" class="text-red-600" @click="handleDelete(w.id)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m18 9l-.84 8.398c-.127 1.273-.19 1.909-.48 2.39a2.5 2.5 0 0 1-1.075.973C15.098 21 14.46 21 13.18 21h-2.36c-1.279 0-1.918 0-2.425-.24a2.5 2.5 0 0 1-1.076-.973c-.288-.48-.352-1.116-.48-2.389L6 9m7.5 6.5v-5m-3 5v-5m-6-4h4.615m0 0l.386-2.672c.112-.486.516-.828.98-.828h3.038c.464 0 .867.342.98.828l.386 2.672m-5.77 0h5.77m0 0H19.5"/></svg>
+                  </button>
                 </td>
               </tr>
               </tbody>
@@ -170,34 +60,28 @@
 </template>
 
 <script setup lang="ts">
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
+import ModalAddWisata from "~/components/form/ModalAddWisata.vue";
+import type {ResponseFetchWisata, WisataType} from "~/types/WisataType";
+import type {KategoriType, ResponseFetchKategori} from "~/types/KategoriType";
 
 definePageMeta({
   layout: 'admin',
 })
 
-const name = ref('');
-const kategori_id = ref('');
-const deskripsi = ref('');
-const lokasi = ref('');
-const jam = ref('');
-const harga = ref();
-const gambar = ref<File[]>([]); // Handle multiple files
-const kategori = ref([]);
-const wisata = ref([]);
-const loading = ref(false);
-const error = ref(null);
+const kategori = ref<KategoriType[]>([]);
+const wisata = ref<WisataType[]>([]);
+const loading = ref<boolean>(false);
+const error = ref<string | null>(null);
 
 // Fetch categories
 const fetchKategori = async () => {
   loading.value = true;
-  error.value = null;
   try {
-    const response = await useFetchApi('/api/kategori');
+    const response = await useFetchApi('/api/kategori') as ResponseFetchKategori;
     kategori.value = response?.data ?? [];
-  } catch (err) {
-    error.value = err.message || 'Gagal memuat data kategori';
-    alert('Gagal memuat data kategori');
+  } catch (err: any) {
+    error.value = err?.message || 'Gagal memuat data kategori';
   } finally {
     loading.value = false;
   }
@@ -206,93 +90,32 @@ const fetchKategori = async () => {
 // Fetch wisata data
 const fetchWisata = async () => {
   loading.value = true;
-  error.value = null;
   try {
-    const response = await useFetchApi('/api/wisata');
+    const response = await useFetchApi('/api/wisata') as ResponseFetchWisata;
     wisata.value = response?.data ?? [];
-  } catch (err) {
-    error.value = err.message || 'Gagal memuat data wisata';
-    alert('Gagal memuat data wisata');
+  } catch (err: any) {
+    error.value = err?.message || 'Gagal memuat data wisata';
   } finally {
     loading.value = false;
   }
 };
 
-onMounted(() => {
-  fetchKategori();
-  fetchWisata(); // Fetch wisata when component is mounted
-});
-
-// Handle file change for multiple images
-const handleFileChange = (event: Event) => {
-  const target = event.target as HTMLInputElement;
-  if (target.files) {
-    // Convert the FileList to an array and generate previews
-    const files = Array.from(target.files);
-    files.forEach(file => {
-      file.preview = URL.createObjectURL(file); // Generate a preview URL
-    });
-    gambar.value = [...gambar.value, ...files]; // Add new files to the list
-  }
-};
-
-// Remove an image from the list
-const removeImage = (index: number) => {
-  gambar.value.splice(index, 1);
-};
-
-// Submit the form
-const handleSubmit = async () => {
-  const closeButton = document.querySelector('[data-hs-overlay="#hs-scale-animation-modal"]');
-  const formData = new FormData();
-
-  // Append form data
-  formData.append('nama', name.value);
-  formData.append('kategori_id', kategori_id.value);
-  formData.append('deskripsi', deskripsi.value);
-  formData.append('lokasi', lokasi.value);
-  formData.append('jam', jam.value);
-  formData.append('harga', harga.value);
-
-  // Append all selected images to FormData
-  gambar.value.forEach(file => {
-    formData.append('gambar[]', file);
-  });
-
-  try {
-    const response = await useFetchApi('/api/auth/wisata', {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (response?.data) {
-      wisata.value.push(response.data?.wisata);
-      alert('Wisata berhasil ditambahkan!');
-    } else {
-      alert('Gagal menambah wisata: Response tidak valid');
-    }
-
-    // Close the modal if the close button exists
-    if (closeButton) closeButton.click();
-  } catch (error) {
-    console.error('Error adding wisata:', error);
-    alert("Gagal menambah wisata");
-
-    // Close the modal if the close button exists
-    if (closeButton) closeButton.click();
-  }
+// add wisata data
+const handleAdd = (data: WisataType) => {
+  wisata.value.push(data)
 }
 
+// Handle delete action
 const handleDelete = async (id: number) => {
   Swal.fire({
-    title: "Anda yakin?",
-    text: "Anda tidak dapat mengembalikan ini!",
-    icon: "warning",
+    title: 'Anda yakin?',
+    text: 'Anda tidak dapat mengembalikan ini!',
+    icon: 'warning',
     showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Ya, hapus!",
-    cancelButtonText: "Batal"
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Ya, hapus!',
+    cancelButtonText: 'Batal',
   }).then(async (result) => {
     if (result.isConfirmed) {
       try {
@@ -300,28 +123,18 @@ const handleDelete = async (id: number) => {
           method: 'DELETE',
         });
 
-        // Hapus data dari tabel setelah berhasil
-        wisata.value = wisata.value.filter(k => k.id !== id);
-
-        await Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Berhasil menghapus wisata",
-          toast: true,
-          showConfirmButton: false,
-          timer: 1500
-        });
+        wisata.value = wisata.value.filter((w) => w.id !== id); // Update wisata list
+        await Swal.fire('Deleted!', 'Wisata telah dihapus.', 'success');
       } catch (err) {
-        await Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: "Gagal menghapus wisata",
-          toast: true,
-          showConfirmButton: false,
-          timer: 1500
-        });
+        await Swal.fire('Error', 'Gagal menghapus wisata', 'error');
       }
     }
   });
 };
+
+// Fetch initial data
+onMounted(() => {
+  fetchKategori();
+  fetchWisata();
+});
 </script>

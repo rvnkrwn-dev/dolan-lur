@@ -48,7 +48,6 @@
         <div class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:mt-0 sm:ps-5">
           <NuxtLink to="/" active-class="!text-blue-500" class="font-medium text-gray-600 hover:text-gray-400 focus:outline-none" aria-current="page">Beranda</NuxtLink>
           <NuxtLink to="/destinations" active-class="!text-blue-500" class="font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400">Tempat Wisata</NuxtLink>
-          <NuxtLink to="/blog" active-class="!text-blue-500" class="font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400">Blog</NuxtLink>
           <NuxtLink to="/about" active-class="!text-blue-500" class="font-medium text-gray-600 hover:text-gray-400 focus:outline-none focus:text-gray-400">Tentang Kami</NuxtLink>
         </div>
       </div>

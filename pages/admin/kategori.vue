@@ -129,6 +129,7 @@
 
 <script setup lang="ts">
 import Swal from "sweetalert2";
+import type {KategoriType, ResponseCreateKategori, ResponseFetchKategori} from "~/types/KategoriType";
 
 definePageMeta({
   layout: 'admin',
@@ -137,7 +138,7 @@ definePageMeta({
 const name = ref<string>('');
 const {useAuthUser} = useAuth()
 
-const kategori = ref([]);
+const kategori = ref<KategoriType[]>([]);
 const loading = ref(false);
 const error = ref(null);
 
@@ -145,9 +146,9 @@ const fetchKategori = async () => {
   loading.value = true;
   error.value = null;
   try {
-    const response = await useFetchApi('/api/kategori');
+    const response = await useFetchApi('/api/kategori') as ResponseFetchKategori;
     kategori.value = response?.data ?? [];
-  } catch (err) {
+  } catch (err: any) {
     error.value = err.message || 'Gagal memuat data';
     alert('Gagal memuat data')
   } finally {
@@ -209,7 +210,7 @@ const handleSubmit = async () => {
       body: {
         nama: name.value
       }
-    })
+    }) as ResponseCreateKategori
 
     kategori.value.push(response?.data);
 

@@ -2,11 +2,11 @@ import { prisma } from "../config/db";
 
 interface GambarType {
     wisata_id: number;
-    filename: string;
+    tautan: string;
 }
 
 export class Gambar {
-    static createGambar = (data: { wisata_id: any; url: string }) => {
+    static createGambar = (data: { wisata_id: any; tautan: string }) => {
         return prisma.gambar.create({
             data,
         });

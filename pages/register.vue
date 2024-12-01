@@ -4,46 +4,42 @@
       <div class="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm">
         <div class="p-4 sm:p-7">
           <div class="text-center">
-            <h1 class="block text-2xl font-bold text-gray-800">Sign Up</h1>
+            <h1 class="block text-2xl font-bold text-gray-800">Daftar</h1>
             <p class="mt-2 text-sm text-gray-600">
-              Have an account?
+              Sudah punya akun?
               <NuxtLink
                   class="text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium"
                   to="/login">
-                Sign in here
+                Masuk di sini
               </NuxtLink>
             </p>
           </div>
 
           <div class="mt-5">
-
             <!-- Form -->
             <form @submit.prevent="onSubmit">
               <div class="grid gap-y-4">
-                <!-- Form Group -->
+                <!-- Form Group: Username -->
                 <div>
-                  <label for="email" class="block text-sm mb-2">Username</label>
+                  <label for="username" class="block text-sm mb-2">Nama Pengguna</label>
                   <div class="relative">
                     <input v-model="username" type="text" id="username" name="username"
                            class="py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                           required aria-describedby="email-error">
+                           required aria-describedby="username-error">
                     <div class="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                       <svg class="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"
                            aria-hidden="true">
-                        <path
-                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
                       </svg>
                     </div>
                   </div>
-                  <p class="hidden text-xs text-red-600 mt-2" id="email-error">Please include a valid email address so
-                    we
-                    can get back to you</p>
+                  <p class="hidden text-xs text-red-600 mt-2" id="username-error">Harap masukkan nama pengguna yang valid</p>
                 </div>
                 <!-- End Form Group -->
 
-                <!-- Form Group -->
+                <!-- Form Group: Password -->
                 <div>
-                  <label for="password" class="block text-sm mb-2">Password</label>
+                  <label for="password" class="block text-sm mb-2">Kata Sandi</label>
                   <div class="relative">
                     <input v-model="password" type="password" id="password" name="password"
                            class="py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
@@ -51,18 +47,35 @@
                     <div class="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
                       <svg class="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"
                            aria-hidden="true">
-                        <path
-                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
                       </svg>
                     </div>
                   </div>
-                  <p class="hidden text-xs text-red-600 mt-2" id="password-error">8+ characters required</p>
+                  <p class="hidden text-xs text-red-600 mt-2" id="password-error">Diperlukan 8+ karakter</p>
+                </div>
+                <!-- End Form Group -->
+
+                <!-- Form Group: Confirm Password -->
+                <div>
+                  <label for="confirm-password" class="block text-sm mb-2">Konfirmasi Kata Sandi</label>
+                  <div class="relative">
+                    <input v-model="confirmPassword" type="password" id="confirm-password" name="confirm-password"
+                           class="py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                           required aria-describedby="confirm-password-error">
+                    <div class="hidden absolute inset-y-0 end-0 pointer-events-none pe-3">
+                      <svg class="size-5 text-red-500" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"
+                           aria-hidden="true">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                      </svg>
+                    </div>
+                  </div>
+                  <p class="hidden text-xs text-red-600 mt-2" id="confirm-password-error">Kata sandi harus cocok</p>
                 </div>
                 <!-- End Form Group -->
 
                 <button type="submit"
                         class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-                  Sign Up
+                  Daftar
                 </button>
               </div>
             </form>
@@ -75,12 +88,26 @@
 </template>
 
 <script setup lang="ts">
-
+import { ref } from 'vue';
 import Swal from "sweetalert2";
 
 const username = ref<string>('');
 const password = ref<string>('');
+const confirmPassword = ref<string>('');
+
 const onSubmit = async () => {
+  if (password.value !== confirmPassword.value) {
+    await Swal.fire({
+      position: "top-end",
+      icon: "warning",
+      title: "Kata sandi tidak cocok",
+      toast: true,
+      showConfirmButton: false,
+      timer: 1500
+    });
+    return;
+  }
+
   try {
     const response = await $fetch('/api/auth/register', {
       method: 'POST',
@@ -88,30 +115,31 @@ const onSubmit = async () => {
         username: username.value,
         password: password.value,
       }
-    })
+    });
+
     await Swal.fire({
       position: "top-end",
       icon: "success",
-      title: "Successfully registered",
+      title: "Berhasil mendaftar",
       toast: true,
       showConfirmButton: false,
       timer: 1500
     });
 
-    return navigateTo('/login')
+    return navigateTo('/login');
   } catch (err) {
     await Swal.fire({
       position: "top-end",
       icon: "warning",
-      title: "Failed to register",
+      title: "Gagal mendaftar",
       toast: true,
       showConfirmButton: false,
       timer: 1500
     });
   }
-}
+};
 </script>
 
 <style scoped>
-
+/* Additional styles if necessary */
 </style>

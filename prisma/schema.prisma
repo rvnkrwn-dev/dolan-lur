@@ -72,7 +72,9 @@ model Gambar {
   id         Int      @id @default(autoincrement())
   wisata_id  Int
   wisata     Wisata   @relation(fields: [wisata_id], references: [id], onDelete: Cascade)
-  filename   String
+  url        String
+  secure_url String
+  public_id  String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 

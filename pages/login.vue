@@ -4,13 +4,13 @@
       <div class="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm">
         <div class="p-4 sm:p-7">
           <div class="text-center">
-            <h1 class="block text-2xl font-bold text-gray-800">Sign in</h1>
+            <h1 class="block text-2xl font-bold text-gray-800">Masuk</h1>
             <p class="mt-2 text-sm text-gray-600">
-              Don't have an account yet?
+              Belum punya akun?
               <NuxtLink
                   class="text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium"
                   to="/register">
-                Sign up here
+                Daftar di sini
               </NuxtLink>
             </p>
           </div>
@@ -22,7 +22,7 @@
               <div class="grid gap-y-4">
                 <!-- Form Group -->
                 <div>
-                  <label for="username" class="block text-sm mb-2">Username</label>
+                  <label for="username" class="block text-sm mb-2">Nama Pengguna</label>
                   <div class="relative">
                     <input v-model="username" type="text" id="username" name="username"
                            class="py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
@@ -35,15 +35,13 @@
                       </svg>
                     </div>
                   </div>
-                  <p class="hidden text-xs text-red-600 mt-2" id="email-error">Please include a valid email address so
-                    we
-                    can get back to you</p>
+                  <p class="hidden text-xs text-red-600 mt-2" id="email-error">Harap masukkan alamat email yang valid agar kami dapat menghubungi Anda</p>
                 </div>
                 <!-- End Form Group -->
 
                 <!-- Form Group -->
                 <div>
-                  <label for="password" class="block text-sm mb-2">Password</label>
+                  <label for="password" class="block text-sm mb-2">Kata Sandi</label>
                   <div class="relative">
                     <input v-model="password" type="password" id="password" name="password"
                            class="py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
@@ -56,7 +54,7 @@
                       </svg>
                     </div>
                   </div>
-                  <p class="hidden text-xs text-red-600 mt-2" id="password-error">8+ characters required</p>
+                  <p class="hidden text-xs text-red-600 mt-2" id="password-error">Diperlukan 8+ karakter</p>
                 </div>
                 <!-- End Form Group -->
 
@@ -67,7 +65,7 @@
                            class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500">
                   </div>
                   <div class="ms-3">
-                    <label for="remember-me" class="text-sm">Remember me</label>
+                    <label for="remember-me" class="text-sm">Ingat saya</label>
                   </div>
                 </div>
                 <!-- End Checkbox -->
@@ -75,7 +73,7 @@
                 <button type="submit"
                         class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
                         :disabled="isLoading">
-                  Sign in
+                  Masuk
                 </button>
               </div>
             </form>

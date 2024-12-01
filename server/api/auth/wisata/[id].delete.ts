@@ -1,45 +1,29 @@
-import { Wisata } from '~/server/model/Wisata';
-import { Gambar } from "~/server/model/Gambar";
-import { unlink } from 'fs/promises'; // Menggunakan unlink untuk menghapus file
-import path from 'path';
+import {Wisata} from '~/server/model/Wisata';
+import {Gambar} from "~/server/model/Gambar";
+import cloudinary from '~/server/utils/cloud';
 
 export default defineEventHandler(async (event) => {
     try {
         const id = parseInt(event.context.params?.id || "0");
         if (!id) {
             setResponseStatus(event, 400);
-            return { code: 400, message: "Invalid Wisata ID." };
+            return {code: 400, message: "Invalid Wisata ID."};
         }
 
         // Ambil semua gambar yang terkait dengan Wisata berdasarkan ID
         const gambarList = await Gambar.getAllGambarById(id); // Pastikan fungsi ini mengambil gambar berdasarkan ID Wisata
 
+        // list yang akan dihapus
+        const gambar = gambarList.map((g) => g.public_id)
+
         // Cek apakah ada gambar terkait
-        if (gambarList && gambarList.length > 0) {
-            // Menghapus gambar dari server
-            const deletePromises = gambarList.map(async (gambar) => {
-                const { filename } = gambar;
-                const filePath = path.join(process.cwd(), 'uploads', filename);
-
-                try {
-                    // Hapus file gambar
-                    await unlink(filePath);
-                    console.log(`Gambar ${filename} berhasil dihapus.`);
-                } catch (err) {
-                    console.error(`Gagal menghapus gambar ${filename}: ${err.message}`);
-                    // Anda bisa memilih untuk melanjutkan meskipun ada gambar yang gagal dihapus
-                }
-            });
-
-            // Tunggu hingga semua gambar dihapus
-            await Promise.all(deletePromises);
-        }
+        await cloudinary.api.delete_resources(gambar, {type: 'upload', resource_type: 'image'})
 
         // Hapus data wisata dari database
         await Wisata.deleteWisata(id);
 
         setResponseStatus(event, 200);
-        return { code: 200, message: "Wisata and associated images successfully deleted!" };
+        return {code: 200, message: "Wisata and associated images successfully deleted!"};
     } catch (error: any) {
         return sendError(
             event,
