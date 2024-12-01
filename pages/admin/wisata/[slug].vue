@@ -102,7 +102,7 @@ definePageMeta({
 
 // Define route to get the ID
 const route = useRoute();
-const wisataId = route.params.id as string;
+const slug = route.params.slug as string;
 
 // Reactive data for wisata
 const wisata = ref({
@@ -121,8 +121,8 @@ const imagePreview = ref<string | null>(null);
 // Get wisata data by ID
 onMounted(async () => {
   try {
-    const response = await useFetchApi(`/api/wisata/${wisataId}`);
-    wisata.value = response.data;
+    const response = await useFetchApi(`/api/wisata/${slug}`);
+    wisata.value = response?.data;
   } catch (error) {
     console.error('Error fetching wisata data:', error);
   }

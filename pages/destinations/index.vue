@@ -48,7 +48,7 @@
       <!-- Grid -->
       <div v-if="!loading" class="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <NuxtLink v-for="item in wisata" :key="item.id"
-                  :to="`/destinations/${item?.id}`"
+                  :to="`/destinations/${item?.slug}`"
                   class="group relative block rounded-xl border border-gray-200 hover:border-transparent hover:shadow-lg focus:outline-none focus:border-transparent focus:shadow-lg transition-all">
           <div class="relative h-52">
             <!-- Gambar pertama dari array gambar -->

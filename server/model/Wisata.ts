@@ -48,9 +48,9 @@ export class Wisata {
         });
     };
 
-    static getWisataById = (id: number) => {
+    static getWisataBySlug = (slug: string) => {
         return prisma.wisata.findUnique({
-            where: {id},
+            where: {slug},
             include: {
                 gambar: true,      // Mengambil gambar terkait dengan wisata
                 rating: {
@@ -100,6 +100,38 @@ export class Wisata {
                         created_at: true,
                     }
                 },      // Mengambil user terkait dengan wisata
+                kategori: true
+            },
+        });
+    };
+
+    static getNewWisata = () => {
+        return prisma.wisata.findMany({
+            orderBy: {
+                created_at: 'desc',  // Urutkan berdasarkan 'created_at' terbaru
+            },
+            take: 6,  // Batasi hasil menjadi 6
+            include: {
+                gambar: true,      // Mengambil gambar terkait dengan wisata
+                rating: {
+                    include: {
+                        user: {
+                            select: {
+                                id: true,
+                                username: true,
+                                role: true,
+                            }
+                        }
+                    }   // Mengambil rating terkait dengan wisata
+                },
+                user: {
+                    select: {
+                        id: true,
+                        username: true,
+                        role: true,
+                        created_at: true,
+                    }
+                },  // Mengambil user terkait dengan wisata
                 kategori: true
             },
         });

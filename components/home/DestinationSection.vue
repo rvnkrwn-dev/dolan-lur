@@ -10,7 +10,7 @@
       <p>Belum ada data</p>
     </div>
     <div v-else class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
-      <NuxtLink v-for="item in wisata" :key="item.id" :to="`/destinations/${item?.id}`"
+      <NuxtLink v-for="item in wisata" :key="item.id" :to="`/destinations/${item?.slug}`"
                 class="group relative block rounded-xl border border-gray-200 hover:border-transparent hover:shadow-lg focus:outline-none focus:border-transparent focus:shadow-lg transition-all">
         <div class="relative h-52">
           <!-- Gambar pertama dari array gambar -->
@@ -59,7 +59,7 @@ const fetchWisata = async () => {
   error.value = null
   try {
     await sleep(2000)
-    const response = await useFetchApi('/api/wisata') as ResponseFetchWisata
+    const response = await useFetchApi('/api/wisata/new') as ResponseFetchWisata
     if (response && response.data) {
       wisata.value = response?.data
     }
