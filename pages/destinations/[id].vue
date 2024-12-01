@@ -1,151 +1,56 @@
 <template>
-  <div>
-    <!-- Features -->
-    <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-      <div class="relative p-6 md:p-16">
-        <!-- Grid -->
-        <div class="relative z-10 lg:grid lg:grid-cols-12 lg:gap-16 lg:items-center">
-          <div class="mb-10 lg:mb-0 lg:col-span-6 lg:col-start-8 lg:order-2">
-            <h2 class="text-2xl text-gray-800 font-bold sm:text-3xl">
-              {{ wisata?.nama }}
-            </h2>
-            <p>{{wisata?.deskripsi}}</p>
-
-            <!-- Tab Navs -->
-            <nav class="grid gap-4 mt-5 md:mt-10" aria-label="Tabs" role="tablist" aria-orientation="vertical">
-              <button type="button" class="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start hover:bg-gray-200 focus:outline-none focus:bg-gray-200 p-4 md:p-5 rounded-xl active" id="tabs-with-card-item-1" aria-selected="true" data-hs-tab="#tabs-with-card-1" aria-controls="tabs-with-card-1" role="tab">
-            <span class="flex gap-x-6">
-              <svg class="shrink-0 mt-2 size-6 md:size-7 hs-tab-active:text-blue-600 text-gray-800" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z"/><path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z"/><path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z"/><path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z"/><path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z"/></svg>
-              <span class="grow">
-                <span class="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800">Lokasi {{wisata?.nama}}</span>
-                <span class="block mt-1 text-gray-800">{{wisata?.lokasi}}</span>
-              </span>
-            </span>
-              </button>
-
-              <button type="button" class="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start hover:bg-gray-200 focus:outline-none focus:bg-gray-200 p-4 md:p-5 rounded-xl" id="tabs-with-card-item-2" aria-selected="false" data-hs-tab="#tabs-with-card-2" aria-controls="tabs-with-card-2" role="tab">
-            <span class="flex gap-x-6">
-              <svg class="shrink-0 mt-2 size-6 md:size-7 hs-tab-active:text-blue-600 text-gray-800" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>
-              <span class="grow">
-                <span class="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800">Jam Operasional</span>
-                <span class="block mt-1 text-gray-800">{{wisata?.jam}}</span>
-              </span>
-            </span>
-              </button>
-
-              <button type="button" class="hs-tab-active:bg-white hs-tab-active:shadow-md hs-tab-active:hover:border-transparent text-start hover:bg-gray-200 focus:outline-none focus:bg-gray-200 p-4 md:p-5 rounded-xl" id="tabs-with-card-item-3" aria-selected="false" data-hs-tab="#tabs-with-card-3" aria-controls="tabs-with-card-3" role="tab">
-            <span class="flex gap-x-6">
-              <svg class="shrink-0 mt-2 size-6 md:size-7 hs-tab-active:text-blue-600 text-gray-800" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
-              <span class="grow">
-                <span class="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800">Rating</span>
-                <span class="block mt-1 text-gray-800">5.0</span>
-              </span>
-            </span>
-              </button>
-            </nav>
-            <!-- End Tab Navs -->
-          </div>
-          <!-- End Col -->
-
-          <div class="lg:col-span-6">
-            <div class="relative">
-              <!-- Tab Content -->
-              <div>
-                <div id="tabs-with-card-1" role="tabpanel" aria-labelledby="tabs-with-card-item-1">
-                  <img class="shadow-xl shadow-gray-200 rounded-xl" :src="'/api/images/' + wisata?.gambar[0].filename" alt="Features Image">
-                </div>
-
-                <div id="tabs-with-card-2" class="hidden" role="tabpanel" aria-labelledby="tabs-with-card-item-2">
-                  <img class="shadow-xl shadow-gray-200 rounded-xl" :src="'/api/images/' + wisata?.gambar[0].filename" alt="Features Image">
-                </div>
-
-                <div id="tabs-with-card-3" class="hidden" role="tabpanel" aria-labelledby="tabs-with-card-item-3">
-                  <img class="shadow-xl shadow-gray-200 rounded-xl" :src="'/api/images/' + wisata?.gambar[0].filename" alt="Features Image">
-                </div>
-              </div>
-              <!-- End Tab Content -->
-
-              <!-- SVG Element -->
-              <div class="hidden absolute top-0 end-0 translate-x-20 md:block lg:translate-x-20">
-                <svg class="w-16 h-auto text-orange-500" width="121" height="135" viewBox="0 0 121 135" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5 16.4754C11.7688 27.4499 21.2452 57.3224 5 89.0164" stroke="currentColor" stroke-width="10" stroke-linecap="round"/>
-                  <path d="M33.6761 112.104C44.6984 98.1239 74.2618 57.6776 83.4821 5" stroke="currentColor" stroke-width="10" stroke-linecap="round"/>
-                  <path d="M50.5525 130C68.2064 127.495 110.731 117.541 116 78.0874" stroke="currentColor" stroke-width="10" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <!-- End SVG Element -->
-            </div>
-          </div>
-          <!-- End Col -->
+  <div v-if="wisata" class="relative max-w-[85rem] w-full mx-auto">
+    <div data-hs-carousel='{"loadingClasses": "opacity-0"}' class="hs-carousel relative w-full overflow-x-hidden min-h-64 md:min-h-[60dvh] sm:rounded-lg">
+      <div class="hs-carousel-body absolute top-0 bottom-0 start-0 flex transition-transform duration-700 opacity-0">
+        <!-- Slide 1: Kebun Raya Baturaden -->
+        <div class="hs-carousel-slide flex items-center justify-center">
+          <img src="https://cdn.paradisotour.co.id/wp-content/uploads/2024/09/Cagar-Alam-Baturaden.jpg" alt="Kebun Raya Baturaden" class="w-full h-full object-cover">
         </div>
-        <!-- End Grid -->
 
-        <!-- Background Color -->
-        <div class="absolute inset-0 grid grid-cols-12 size-full">
-          <div class="col-span-full lg:col-span-7 lg:col-start-6 bg-gray-100 w-full h-5/6 rounded-xl sm:h-3/4 lg:h-full"></div>
+        <!-- Slide 2: Hutan Pinus Limpakuwus -->
+        <div class="hs-carousel-slide flex items-center justify-center">
+          <img src="https://ayukjalan.com/wp-content/uploads/2024/04/IMG_28012020_091943__822_x_430_piksel_.jpg" alt="Hutan Pinus Limpakuwus" class="w-full h-full object-cover">
         </div>
-        <!-- End Background Color -->
       </div>
-    </div>
-    <!-- End Features -->
 
-    <!-- Comment Form -->
-    <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-      <div class="mx-auto max-w-2xl">
-        <div class="text-center">
-          <h2 class="text-xl text-gray-800 font-bold sm:text-3xl">
-            Post a comment
-          </h2>
+      <!-- Carousel Pagination -->
+      <div class="hs-carousel-pagination absolute bottom-3 start-0 w-full">
+        <div class="flex gap-x-2 px-4">
+          <div class="hs-carousel-pagination-item cursor-pointer w-[100px] h-[50px] border rounded-md flex justify-center items-center bg-gray-100 hover:border-blue-400">
+            <img src="https://cdn.paradisotour.co.id/wp-content/uploads/2024/09/Cagar-Alam-Baturaden.jpg" alt="Kebun Raya Baturaden" class="w-full h-full object-cover rounded-md">
+          </div>
+          <div class="hs-carousel-pagination-item cursor-pointer w-[100px] h-[50px] border rounded-md flex justify-center items-center bg-gray-200 hover:border-blue-400">
+            <img src="https://ayukjalan.com/wp-content/uploads/2024/04/IMG_28012020_091943__822_x_430_piksel_.jpg" alt="Hutan Pinus Limpakuwus" class="w-full h-full object-cover rounded-md">
+          </div>
         </div>
-
-        <!-- Card -->
-        <div class="mt-5 p-4 relative z-10 bg-white border rounded-xl sm:mt-10 md:p-10">
-          <form>
-            <div class="mb-4 sm:mb-8">
-              <label for="hs-feedback-post-comment-name-1" class="block mb-2 text-sm font-medium">Full name</label>
-              <input type="text" id="hs-feedback-post-comment-name-1" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Full name">
-            </div>
-
-            <div class="mb-4 sm:mb-8">
-              <label for="hs-feedback-post-comment-email-1" class="block mb-2 text-sm font-medium">Email address</label>
-              <input type="email" id="hs-feedback-post-comment-email-1" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Email address">
-            </div>
-
-            <div>
-              <label for="hs-feedback-post-comment-textarea-1" class="block mb-2 text-sm font-medium">Comment</label>
-              <div class="mt-1">
-                <textarea id="hs-feedback-post-comment-textarea-1" name="hs-feedback-post-comment-textarea-1" rows="3" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Leave your comment here..."></textarea>
-              </div>
-            </div>
-
-            <div class="mt-6 grid">
-              <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">Submit</button>
-            </div>
-          </form>
-        </div>
-        <!-- End Card -->
       </div>
+
+      <!-- Carousel Navigation -->
+      <button type="button" class="hs-carousel-prev absolute inset-y-0 start-0 w-[46px] h-full text-gray-800 hover:bg-gray-800/10 rounded-s-lg">
+      <span class="text-2xl">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"></path>
+        </svg>
+      </span>
+      </button>
+      <button type="button" class="hs-carousel-next absolute inset-y-0 end-0 w-[46px] h-full text-gray-800 hover:bg-gray-800/10 rounded-e-lg">
+      <span class="text-2xl">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6"></path>
+        </svg>
+      </span>
+      </button>
     </div>
-    <!-- End Comment Form -->
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-
-interface Wisata {
-  // Define the shape of your wisata object here, for example:
-  id: string;
-  name: string;
-  description: string;
-  // Add other fields according to your API response
-}
+import type { ResponseFetchSingleWisata, WisataType } from "~/types/WisataType";
 
 const route = useRoute();
 const id = route.params.id as string | undefined; // Ensure id is a string or undefined
-const wisata = ref<Wisata | null>(null);
-const loading = ref(false);
+const wisata = ref<WisataType | null>(null);
+const loading = ref<boolean>(false);
 const error = ref<string | null>(null);
 
 const fetchWisata = async () => {
@@ -158,12 +63,16 @@ const fetchWisata = async () => {
   error.value = null;
 
   try {
-    const response = await useFetchApi(`/api/wisata/${id}`);
-    wisata.value = response?.data ?? null;
-  } catch (err) {
+    const response = await useFetchApi(`/api/wisata/${id}`) as ResponseFetchSingleWisata;
+    if (response && response.data) {
+      wisata.value = response.data;
+    } else {
+      error.value = 'Data wisata tidak ditemukan';
+    }
+  } catch (err: any) {
     error.value = err.message || 'Gagal memuat data wisata';
-    console.error(error.value); // Log error for debugging purposes
-    alert(error.value); // Or replace this with a more sophisticated error handling UI (e.g., toast)
+    console.error(error.value);
+    alert(error.value); // Or replace this with a toast message
   } finally {
     loading.value = false;
   }
@@ -174,7 +83,6 @@ onMounted(() => {
 });
 </script>
 
-
 <style scoped>
-
+/* Add any custom styles here if needed */
 </style>

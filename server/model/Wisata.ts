@@ -53,7 +53,26 @@ export class Wisata {
             where: {id},
             include: {
                 gambar: true,      // Mengambil gambar terkait dengan wisata
-                rating: true,      // Mengambil rating terkait dengan wisata
+                rating: {
+                    include: {
+                        user: {
+                            select: {
+                                id: true,
+                                username: true,
+                                role: true,
+                            }
+                        }
+                    }
+                },      // Mengambil rating terkait dengan wisata
+                user: {
+                    select: {
+                        id: true,
+                        username: true,
+                        role: true,
+                        created_at: true,
+                    }
+                },      // Mengambil user terkait dengan wisata
+                kategori: true
             },
         });
     };

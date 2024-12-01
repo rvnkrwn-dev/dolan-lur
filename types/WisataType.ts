@@ -30,6 +30,11 @@ export interface ResponseCreateWisata {
     data: WisataType;
 }
 
+export interface ResponseFetchSingleWisata {
+    code: number;
+    data: WisataType;
+}
+
 export interface ResponseFetchWisata {
     code: number;
     data: WisataType[];
