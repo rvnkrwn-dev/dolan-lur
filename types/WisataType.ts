@@ -8,6 +8,32 @@ interface Gambar {
     updated_at: string;
 }
 
+interface User {
+    id: number;
+    username: string;
+    role: string;
+    created_at: string;
+}
+
+interface Kategori {
+    id: number;
+    user_id: number;
+    nama: string;
+    created_at: string;
+    updated_at: string;
+}
+
+interface Rating {
+    // Misalnya, rating bisa memiliki id, nilai, atau komentar, dan lainnya
+    id: number;
+    wisata_id: number;
+    user_id: number;
+    nilai: number;  // Rating berbentuk angka
+    komentar?: string;  // Opsional, jika ada komentar
+    created_at: string;
+    updated_at: string;
+}
+
 export interface WisataType {
     id: number;
     user_id: number;
@@ -22,7 +48,9 @@ export interface WisataType {
     created_at: string;
     updated_at: string;
     gambar: Gambar[];
-    rating: number[];  // Bisa menggunakan number[] untuk rating atau bisa menggunakan type lebih detail jika diperlukan
+    rating: Rating[];  // Menggunakan Rating[] karena rating lebih kompleks
+    user: User;
+    kategori: Kategori;
 }
 
 export interface ResponseCreateWisata {
