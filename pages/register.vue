@@ -132,6 +132,7 @@ const onSubmit = async () => {
       position: "top-end",
       icon: "warning",
       title: "Gagal mendaftar",
+      text: "Username mungkin telah terdaftar",
       toast: true,
       showConfirmButton: false,
       timer: 1500
