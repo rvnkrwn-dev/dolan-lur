@@ -72,6 +72,16 @@
               </NuxtLink>
             </li>
 
+            <li class="hs-accordion" id="account-accordion">
+              <NuxtLink
+                  active-class="bg-gray-100"
+                  class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                  to="/admin/gambar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="currentColor" d="M19 5v14H5V5zm0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m-4.86 8.86l-3 3.87L9 13.14L6 17h12z"/></svg>
+                Gambar
+              </NuxtLink>
+            </li>
+
             <li class="hs-accordion" id="projects-accordion">
               <NuxtLink
                   active-class="bg-gray-100"
@@ -82,7 +92,7 @@
                         stroke-width="2"
                         d="M21 20c0-1.742-1.67-3.223-4-3.773M15 20c0-2.21-2.686-4-6-4s-6 1.79-6 4m12-7a4 4 0 0 0 0-8m-6 8a4 4 0 1 1 0-8a4 4 0 0 1 0 8"/>
                 </svg>
-                Users
+                Pengguna
               </NuxtLink>
             </li>
 
@@ -95,7 +105,7 @@
                   <path fill="currentColor"
                         d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h7v2H5v14h7v2zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5z"/>
                 </svg>
-                Logout
+                Keluar
               </button>
             </li>
 

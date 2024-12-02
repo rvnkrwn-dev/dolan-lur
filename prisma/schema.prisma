@@ -55,7 +55,6 @@ model Wisata {
   slug        String   @unique
   deskripsi   String   @db.Text
   harga       Int
-  carousel    Boolean  @default(false)
   lokasi      String
   jam         String
   gambar      Gambar[] // Relasi ke gambar wisata
@@ -75,6 +74,7 @@ model Gambar {
   url        String
   secure_url String
   public_id  String
+  carousel   Boolean  @default(false)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 

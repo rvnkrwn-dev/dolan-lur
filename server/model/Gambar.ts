@@ -6,18 +6,6 @@ interface GambarType {
 }
 
 export class Gambar {
-    static createGambar = (data: { wisata_id: any; tautan: string }) => {
-        return prisma.gambar.create({
-            data,
-        });
-    };
-
-    static createManyGambar = (data: GambarType[]) => {
-        return prisma.gambar.createMany({
-            data,
-        });
-    };
-
     static updateGambar = (id: number, data: Partial<GambarType>) => {
         return prisma.gambar.update({
             where: { id },
@@ -38,7 +26,11 @@ export class Gambar {
     };
 
     static getAllGambar = () => {
-        return prisma.gambar.findMany();
+        return prisma.gambar.findMany({
+            include: {
+                wisata: true
+            }
+        });
     };
 
     static deleteGambar = (id: number) => {

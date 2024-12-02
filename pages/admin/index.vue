@@ -35,6 +35,7 @@
     </div>
   </div>
   <!-- End Breadcrumb -->
+
   <div class="w-full pt-10 px-4 sm:px-6 md:px-8 lg:ps-72">
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
       <!-- Card -->
@@ -177,11 +178,13 @@
 </template>
 
 <script setup lang="ts">
+import type {ResponseFetchWisata, WisataType} from "~/types/WisataType";
+
 definePageMeta({
   layout: 'admin',
 })
 
-const wisata = ref([]);
+const wisata = ref<WisataType[]>([]);
 const stats = ref({
   users: 0,
   destination: 0,
@@ -194,11 +197,10 @@ const fetchWisata = async () => {
   loading.value = true;
   error.value = null;
   try {
-    const response = await useFetchApi('/api/wisata');
-    wisata.value = response?.data ?? [];
-  } catch (err) {
-    error.value = err.message || 'Gagal memuat data wisata';
-    alert('Gagal memuat data wisata');
+    const response = await useFetchApi('/api/wisata') as ResponseFetchWisata;
+    wisata.value = response?.data;
+  } catch (err: any) {
+    error.value = err?.message || 'Gagal memuat data wisata';
   } finally {
     loading.value = false;
   }
@@ -206,11 +208,10 @@ const fetchWisata = async () => {
 
 const fetchStats = async () => {
   try {
-    const response = await useFetchApi('/api/data/stats');
+    const response = await useFetchApi('/api/data/stats') as any;
     stats.value = response?.data ?? {};
-  } catch (err) {
+  } catch (err: any) {
     error.value = err.message || 'Gagal memuat data wisata';
-    alert('Gagal memuat data wisata');
   } finally {
     loading.value = false;
   }

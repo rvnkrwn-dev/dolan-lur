@@ -30,25 +30,48 @@
               </tr>
               </thead>
               <tbody class="divide-y divide-gray-200">
-              <tr v-for="(w, index) in wisata" :key="w.id">
-                <td class="ps-6 py-3 whitespace-nowrap">{{ index + 1 }}</td>
-                <td class="px-6 py-3 whitespace-nowrap">{{ w.nama }}</td>
-                <td class="px-6 py-3 whitespace-nowrap">
-                  {{ w.kategori.nama }}
-                </td>
-                <td class="px-6 py-3 whitespace-nowrap">
-                  {{ w.rating.length > 0 ? w.rating.length : 'N/A' }}
-                </td>
-                <td class="px-6 py-3 whitespace-nowrap">{{ new Date(w.created_at).toDateString() }}</td>
-                <td class="px-6 py-3 whitespace-nowrap flex items-center justify-end gap-x-2">
-                  <NuxtLink class="text-blue-600" :to="`/admin/wisata/${w.id}`">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="currentColor"><path d="M16.607 3.005a2.57 2.57 0 0 1 3.64-.001l.75.751a2.57 2.57 0 0 1 0 3.637l-7.6 7.604a2.57 2.57 0 0 1-1.819.754H9a.75.75 0 0 1-.75-.75v-2.562c0-.682.27-1.336.752-1.818z"/><path d="M11.943 2.25H12a.75.75 0 0 1 0 1.5c-2.143 0-3.674.002-4.838.158c-1.142.154-1.817.444-2.314.94c-.496.497-.786 1.172-.94 2.314C3.752 8.326 3.75 9.857 3.75 12s.002 3.674.158 4.838c.154 1.142.444 1.817.94 2.314c.497.496 1.172.786 2.314.94c1.164.156 2.695.158 4.838.158s3.674-.002 4.838-.158c1.142-.154 1.817-.444 2.314-.94c.496-.497.786-1.172.94-2.314c.156-1.164.158-2.696.158-4.838a.75.75 0 0 1 1.5 0v.057c0 2.073 0 3.705-.171 4.98c-.176 1.31-.545 2.354-1.367 3.175c-.821.822-1.866 1.19-3.174 1.367c-1.276.171-2.908.171-4.981.171h-.114c-2.073 0-3.705 0-4.98-.171c-1.31-.176-2.354-.545-3.175-1.367c-.822-.821-1.19-1.866-1.367-3.174c-.171-1.276-.171-2.908-.171-4.981v-.114c0-2.073 0-3.705.171-4.98c.176-1.31.545-2.354 1.367-3.175c.821-.822 1.866-1.19 3.174-1.367c1.276-.171 2.908-.171 4.981-.171"/></g></svg>
-                  </NuxtLink>
-                  <button type="button" class="text-red-600" @click="handleDelete(w.id)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m18 9l-.84 8.398c-.127 1.273-.19 1.909-.48 2.39a2.5 2.5 0 0 1-1.075.973C15.098 21 14.46 21 13.18 21h-2.36c-1.279 0-1.918 0-2.425-.24a2.5 2.5 0 0 1-1.076-.973c-.288-.48-.352-1.116-.48-2.389L6 9m7.5 6.5v-5m-3 5v-5m-6-4h4.615m0 0l.386-2.672c.112-.486.516-.828.98-.828h3.038c.464 0 .867.342.98.828l.386 2.672m-5.77 0h5.77m0 0H19.5"/></svg>
-                  </button>
-                </td>
-              </tr>
+              <template v-if="loading">
+                <tr>
+                  <td colspan="6" class="text-center py-3">Memuat...</td>
+                </tr>
+              </template>
+              <template v-else-if="!loading && wisata.length > 0">
+                <tr v-for="(w, index) in wisata" :key="w.id">
+                  <td class="ps-6 py-3 whitespace-nowrap">{{ index + 1 }}</td>
+                  <td class="px-6 py-3 whitespace-nowrap">{{ w.nama }}</td>
+                  <td class="px-6 py-3 whitespace-nowrap">
+                    {{ w.kategori.nama }}
+                  </td>
+                  <td class="px-6 py-3 whitespace-nowrap">
+                    {{ w.rating.length > 0 ? w.rating.length : 'N/A' }}
+                  </td>
+                  <td class="px-6 py-3 whitespace-nowrap">{{ new Date(w.created_at).toDateString() }}</td>
+                  <td class="px-6 py-3 whitespace-nowrap flex items-center justify-end gap-x-2">
+                    <NuxtLink class="text-blue-600" :to="`/admin/wisata/${w.id}`">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <g fill="currentColor">
+                          <path
+                              d="M16.607 3.005a2.57 2.57 0 0 1 3.64-.001l.75.751a2.57 2.57 0 0 1 0 3.637l-7.6 7.604a2.57 2.57 0 0 1-1.819.754H9a.75.75 0 0 1-.75-.75v-2.562c0-.682.27-1.336.752-1.818z"/>
+                          <path
+                              d="M11.943 2.25H12a.75.75 0 0 1 0 1.5c-2.143 0-3.674.002-4.838.158c-1.142.154-1.817.444-2.314.94c-.496.497-.786 1.172-.94 2.314C3.752 8.326 3.75 9.857 3.75 12s.002 3.674.158 4.838c.154 1.142.444 1.817.94 2.314c.497.496 1.172.786 2.314.94c1.164.156 2.695.158 4.838.158s3.674-.002 4.838-.158c1.142-.154 1.817-.444 2.314-.94c.496-.497.786-1.172.94-2.314c.156-1.164.158-2.696.158-4.838a.75.75 0 0 1 1.5 0v.057c0 2.073 0 3.705-.171 4.98c-.176 1.31-.545 2.354-1.367 3.175c-.821.822-1.866 1.19-3.174 1.367c-1.276.171-2.908.171-4.981.171h-.114c-2.073 0-3.705 0-4.98-.171c-1.31-.176-2.354-.545-3.175-1.367c-.822-.821-1.19-1.866-1.367-3.174c-.171-1.276-.171-2.908-.171-4.981v-.114c0-2.073 0-3.705.171-4.98c.176-1.31.545-2.354 1.367-3.175c.821-.822 1.866-1.19 3.174-1.367c1.276-.171 2.908-.171 4.981-.171"/>
+                        </g>
+                      </svg>
+                    </NuxtLink>
+                    <button type="button" class="text-red-600" @click="handleDelete(w.id)">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                              stroke-width="1.5"
+                              d="m18 9l-.84 8.398c-.127 1.273-.19 1.909-.48 2.39a2.5 2.5 0 0 1-1.075.973C15.098 21 14.46 21 13.18 21h-2.36c-1.279 0-1.918 0-2.425-.24a2.5 2.5 0 0 1-1.076-.973c-.288-.48-.352-1.116-.48-2.389L6 9m7.5 6.5v-5m-3 5v-5m-6-4h4.615m0 0l.386-2.672c.112-.486.516-.828.98-.828h3.038c.464 0 .867.342.98.828l.386 2.672m-5.77 0h5.77m0 0H19.5"/>
+                      </svg>
+                    </button>
+                  </td>
+                </tr>
+              </template>
+              <template v-else>
+                <tr>
+                  <td colspan="6" class="text-center py-3">Belum ada data</td>
+                </tr>
+              </template>
               </tbody>
             </table>
             <!-- End Table -->

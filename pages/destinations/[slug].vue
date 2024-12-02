@@ -129,7 +129,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import type {ResponseFetchSingleWisata, WisataType} from "~/types/WisataType";
-import {formatToIDR} from "../../utils/IdrFormat";
+import {formatToIDR} from "~/utils/IdrFormat";
 // Modules for Swiper
 const modules = [Navigation, Pagination, Scrollbar];
 const route = useRoute();
