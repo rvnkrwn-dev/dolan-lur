@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
             return { code: 400, message: "Invalid request data." };
         }
 
-        const payload: any = {};
+        const payload: WisataT = {};
         if (nama) payload.nama = nama;
         if (deskripsi) payload.deskripsi = deskripsi;
         if (lokasi) payload.lokasi = lokasi;

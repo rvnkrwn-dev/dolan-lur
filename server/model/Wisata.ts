@@ -12,7 +12,6 @@ export interface CreateWisataInput {
     slug: string;
     deskripsi: string;
     harga: number;
-    carousel?: boolean;
     lokasi: string;
     jam: string;
     user_id: number;
@@ -28,7 +27,6 @@ export class Wisata {
                 slug: data.slug,
                 deskripsi: data.deskripsi,
                 harga: data.harga,
-                carousel: data?.carousel,
                 lokasi: data.lokasi,
                 jam: data.jam,
                 user_id: data.user_id,
@@ -138,6 +136,12 @@ export class Wisata {
     };
 
     static deleteWisata = (id: number) => {
+        return prisma.wisata.delete({
+            where: {id},
+        });
+    };
+
+    static updateWisata = (id: number, data: any) => {
         return prisma.wisata.delete({
             where: {id},
         });

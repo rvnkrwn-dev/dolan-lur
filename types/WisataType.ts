@@ -42,7 +42,6 @@ export interface WisataType {
     slug: string;
     deskripsi: string;
     harga: number;
-    carousel: boolean;
     lokasi: string;
     jam: string;
     created_at: string;
