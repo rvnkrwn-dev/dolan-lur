@@ -1,5 +1,5 @@
 <template>
-  <div class="relative max-w-[85rem] w-full mx-auto xl:p-4">
+  <div class="relative max-w-[85rem] w-full mx-auto xl:px-4">
     <!-- Skeleton Loader untuk Carousel -->
     <div v-if="loading" class="w-full h-[20rem] md:h-[35rem] bg-gray-200 animate-pulse rounded-xl">
       <div class="w-full h-full flex items-center justify-center">
