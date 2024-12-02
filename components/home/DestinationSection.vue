@@ -5,10 +5,10 @@
     <!-- Skeleton Loading -->
     <div v-if="loading">
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
-        <div class="w-72 h-52 bg-gray-300 animate-pulse rounded-md"></div>
-        <div class="w-72 h-52 bg-gray-300 animate-pulse rounded-md"></div>
-        <div class="w-72 h-52 bg-gray-300 animate-pulse rounded-md"></div>
-        <div class="w-72 h-52 bg-gray-300 animate-pulse rounded-md"></div>
+        <div class="min-w-full max-w-full h-52 bg-gray-300 animate-pulse rounded-md"></div>
+        <div class="min-w-full max-w-full h-52 bg-gray-300 animate-pulse rounded-md"></div>
+        <div class="min-w-full max-w-full h-52 bg-gray-300 animate-pulse rounded-md"></div>
+        <div class="min-w-full max-w-full h-52 bg-gray-300 animate-pulse rounded-md"></div>
       </div>
     </div>
 
