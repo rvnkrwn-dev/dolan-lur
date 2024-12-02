@@ -1,18 +1,27 @@
 <template>
   <div class="relative max-w-[85rem] w-full mx-auto xl:p-4">
+    <!-- Skeleton Loader untuk Carousel -->
+    <div v-if="loading" class="w-full h-[40rem] bg-gray-200 animate-pulse rounded-xl">
+      <div class="w-full h-full flex items-center justify-center">
+        <div class="bg-gray-300 w-[80%] h-[80%] rounded-lg"></div>
+      </div>
+    </div>
+
+    <!-- Swiper Carousel -->
     <swiper
+        v-else
         :loop="true"
         :modules="modules"
         :slides-per-view="1"
         :space-between="150"
         navigation
+        pagination
         :draggable="true"
         :autoplay="{
-            delay: 2500,
+            delay: 1500,
             disableOnInteraction: false,
           }"
         class="w-full h-full max-h-[40rem] xl:rounded-xl">
-      >
       <swiper-slide v-for="c in carousel" :key="c.id">
         <div class="swiper-item w-full h-full">
           <img
@@ -24,6 +33,11 @@
         </div>
       </swiper-slide>
     </swiper>
+
+    <!-- Error Message -->
+    <div v-if="error" class="text-red-500 mt-4">
+      <p>{{ error }}</p>
+    </div>
   </div>
 </template>
 
@@ -81,5 +95,28 @@ function addCloudinaryTransformations(url: string, transformations: string = "ar
 </script>
 
 <style scoped>
+/* Styling untuk skeleton loader */
+.animate-pulse {
+  animation: pulse 1.5s infinite ease-in-out;
+}
 
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.bg-gray-200 {
+  background-color: #e5e7eb;
+}
+
+.bg-gray-300 {
+  background-color: #d1d5db;
+}
 </style>
