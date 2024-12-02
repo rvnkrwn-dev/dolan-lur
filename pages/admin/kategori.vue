@@ -35,6 +35,7 @@
     </div>
   </div>
   <!-- End Breadcrumb -->
+
   <div class="w-full px-4 pt-10 sm:px-6 md:px-8 lg:ps-72">
     <div class="flex flex-col">
       <div class="-m-1.5 overflow-x-auto">
