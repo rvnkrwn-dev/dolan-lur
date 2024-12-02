@@ -1,4 +1,4 @@
-import { prisma } from "../config/db";
+import {prisma} from "../config/db";
 
 interface GambarType {
     wisata_id: number;
@@ -8,20 +8,28 @@ interface GambarType {
 export class Gambar {
     static updateGambar = (id: number, data: Partial<GambarType>) => {
         return prisma.gambar.update({
-            where: { id },
+            where: {id},
             data,
         });
     };
 
     static getGambarById = (id: number) => {
         return prisma.gambar.findUnique({
-            where: { id },
+            where: {id},
         });
     };
 
     static getAllGambarById = (id: number) => {
         return prisma.gambar.findMany({
-            where: { id },
+            where: {id},
+        });
+    };
+
+    static getAllGambarByCarousel = () => {
+        return prisma.gambar.findMany({
+            where: {
+                carousel: true,
+            },
         });
     };
 
@@ -35,7 +43,7 @@ export class Gambar {
 
     static deleteGambar = (id: number) => {
         return prisma.gambar.delete({
-            where: { id },
+            where: {id},
         });
     };
 }

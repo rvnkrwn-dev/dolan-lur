@@ -1,4 +1,5 @@
 import { Wisata } from '~/server/model/Wisata';
+import {WisataType} from "~/types/WisataType";
 
 export default defineEventHandler(async (event) => {
     try {
@@ -10,7 +11,7 @@ export default defineEventHandler(async (event) => {
             return { code: 400, message: "Invalid request data." };
         }
 
-        const payload: WisataT = {};
+        const payload: any = {};
         if (nama) payload.nama = nama;
         if (deskripsi) payload.deskripsi = deskripsi;
         if (lokasi) payload.lokasi = lokasi;

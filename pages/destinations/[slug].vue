@@ -119,7 +119,6 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref} from 'vue';
 import {Navigation, Pagination, Scrollbar} from 'swiper/modules';
 import {Swiper, SwiperSlide} from 'swiper/vue';
 

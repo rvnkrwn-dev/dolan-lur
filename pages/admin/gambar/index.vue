@@ -70,10 +70,10 @@
                   </td>
                   <td class="px-6 py-3 text-end">
                     <button v-if="g.carousel" type="button" class="text-red-600 hover:underline ms-4"
-                            @click="handleDelete(g.id)">Matikan
+                            @click="handleChangeCarousel(g.id, {carousel: false})">Matikan
                     </button>
                     <button v-else type="button" class="text-green-600 hover:underline ms-4"
-                            @click="handleDelete(g.id)">Aktifkan
+                            @click="handleChangeCarousel(g.id, {carousel: true})">Aktifkan
                     </button>
                   </td>
                 </tr>
@@ -117,44 +117,31 @@ const fetchGambar = async () => {
 };
 
 // Hapus gambar
-const handleDelete = async (id: number) => {
-  Swal.fire({
-    title: "Anda yakin?",
-    text: "Anda tidak dapat mengembalikan ini!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Ya, hapus!",
-    cancelButtonText: "Batal"
-  }).then(async (result) => {
-    if (result.isConfirmed) {
-      try {
-        await useFetchApi(`/api/gambar/${id}`, {
-          method: 'DELETE',
-        });
+const handleChangeCarousel = async (id: number, data: any) => {
+  try {
+    await useFetchApi(`/api/auth/gambar/${id}`, {
+      method: 'PUT',
+      body: data
+    });
 
-        gambar.value = gambar.value.filter(g => g.id !== id);
-        await Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Berhasil menghapus gambar",
-          toast: true,
-          showConfirmButton: false,
-          timer: 1500
-        });
-      } catch (err) {
-        await Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: "Gagal menghapus gambar",
-          toast: true,
-          showConfirmButton: false,
-          timer: 1500
-        });
-      }
-    }
-  });
+    await Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Berhasil mengubah status carousel gambar",
+      toast: true,
+      showConfirmButton: false,
+      timer: 1500
+    });
+  } catch (err) {
+    await Swal.fire({
+      position: "top-end",
+      icon: "error",
+      title: "Gagal mengubah status carousel gambar",
+      toast: true,
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
 };
 
 // Fetch gambar saat halaman dimuat

@@ -1,6 +1,6 @@
 <template>
   <div class="mt-20 max-w-7xl mx-auto px-4">
-    <h2 class="text-2xl md:text-3xl font-semibold text-gray-800 text-center">Pilih Destinasi Anda</h2>
+    <h2 class="text-2xl md:text-3xl font-semibold text-gray-800 text-center">Destinasi Terbaru</h2>
 
     <div v-if="loading" class="p-4 text-center text-gray-500 h-32 flex items-center justify-center">
       <p>Memuat data...</p>

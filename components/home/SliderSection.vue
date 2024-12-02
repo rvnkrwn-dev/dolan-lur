@@ -1,51 +1,83 @@
 <template>
-  <div class="relative max-w-[85rem] w-full mx-auto">
-    <div data-hs-carousel='{"loadingClasses": "opacity-0"}' class="hs-carousel relative w-full overflow-x-hidden min-h-64 md:min-h-[60dvh] sm:rounded-lg">
-      <div class="hs-carousel-body absolute top-0 bottom-0 start-0 flex transition-transform duration-700 opacity-0">
-        <!-- Slide 1: Kebun Raya Baturaden -->
-        <div class="hs-carousel-slide flex items-center justify-center">
-          <img src="https://cdn.paradisotour.co.id/wp-content/uploads/2024/09/Cagar-Alam-Baturaden.jpg" alt="Kebun Raya Baturaden" class="w-full h-full object-cover">
+  <div class="relative max-w-[85rem] w-full mx-auto xl:p-4">
+    <swiper
+        :loop="true"
+        :modules="modules"
+        :slides-per-view="1"
+        :space-between="150"
+        navigation
+        :draggable="true"
+        :autoplay="{
+            delay: 2500,
+            disableOnInteraction: false,
+          }"
+        class="w-full h-full max-h-[40rem] xl:rounded-xl">
+      >
+      <swiper-slide v-for="c in carousel" :key="c.id">
+        <div class="swiper-item w-full h-full">
+          <img
+              loading="lazy"
+              :alt="c.public_id"
+              :src="addCloudinaryTransformations(c.secure_url)"
+              class="min-w-full"
+          />
         </div>
-
-        <!-- Slide 2: Hutan Pinus Limpakuwus -->
-        <div class="hs-carousel-slide flex items-center justify-center">
-          <img src="https://ayukjalan.com/wp-content/uploads/2024/04/IMG_28012020_091943__822_x_430_piksel_.jpg" alt="Hutan Pinus Limpakuwus" class="w-full h-full object-cover">
-        </div>
-      </div>
-
-      <!-- Carousel Pagination -->
-      <div class="hs-carousel-pagination absolute bottom-3 start-0 w-full">
-        <div class="flex gap-x-2 px-4">
-          <div class="hs-carousel-pagination-item cursor-pointer w-[100px] h-[50px] border rounded-md flex justify-center items-center bg-gray-100 hover:border-blue-400">
-            <img src="https://cdn.paradisotour.co.id/wp-content/uploads/2024/09/Cagar-Alam-Baturaden.jpg" alt="Kebun Raya Baturaden" class="w-full h-full object-cover rounded-md">
-          </div>
-          <div class="hs-carousel-pagination-item cursor-pointer w-[100px] h-[50px] border rounded-md flex justify-center items-center bg-gray-200 hover:border-blue-400">
-            <img src="https://ayukjalan.com/wp-content/uploads/2024/04/IMG_28012020_091943__822_x_430_piksel_.jpg" alt="Hutan Pinus Limpakuwus" class="w-full h-full object-cover rounded-md">
-          </div>
-        </div>
-      </div>
-
-      <!-- Carousel Navigation -->
-      <button type="button" class="hs-carousel-prev absolute inset-y-0 start-0 w-[46px] h-full text-gray-800 hover:bg-gray-800/10 rounded-s-lg">
-      <span class="text-2xl">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="m15 18-6-6 6-6"></path>
-        </svg>
-      </span>
-      </button>
-      <button type="button" class="hs-carousel-next absolute inset-y-0 end-0 w-[46px] h-full text-gray-800 hover:bg-gray-800/10 rounded-e-lg">
-      <span class="text-2xl">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="m9 18 6-6-6-6"></path>
-        </svg>
-      </span>
-      </button>
-    </div>
+      </swiper-slide>
+    </swiper>
   </div>
 </template>
 
 <script setup lang="ts">
+import {sleep} from "@antfu/utils";
+import {Navigation, Pagination, Scrollbar} from 'swiper/modules';
+import {Swiper, SwiperSlide} from 'swiper/vue';
 
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+
+const modules = [Navigation, Pagination, Scrollbar];
+const carousel = ref<any[]>([])  // This will hold the fetched wisata data
+const loading = ref(false)  // Loading state
+const error = ref(null)  // Error handling
+
+const fetchCarousel = async () => {
+  loading.value = true
+  error.value = null
+  try {
+    await sleep(2000)
+    const response = await useFetchApi('/api/gambar/carousel') as any
+    if (response && response.data) {
+      carousel.value = response?.data
+    }
+  } catch (err: any) {
+    error.value = err?.message || 'Failed to fetch wisata data'
+    console.error(error.value)
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(() => {
+  fetchCarousel()
+})
+
+function addCloudinaryTransformations(url: string, transformations: string = "ar_16:9,c_crop,g_auto,w_1280") {
+  // Pisahkan URL menjadi bagian sebelum dan sesudah "/image/upload/"
+  const uploadIndex = url.indexOf("/image/upload/");
+  if (uploadIndex === -1) {
+    throw new Error("URL Cloudinary tidak valid");
+  }
+
+  // Sisipkan transformasi di antara bagian sebelum dan sesudah "/image/upload/"
+  const beforeUpload = url.substring(0, uploadIndex + 14); // "/image/upload/" memiliki panjang 14 karakter
+  const afterUpload = url.substring(uploadIndex + 14);
+
+  // Gabungkan transformasi
+  return `${beforeUpload}${transformations}/${afterUpload}`;
+}
 </script>
 
 <style scoped>
