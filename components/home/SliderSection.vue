@@ -14,7 +14,7 @@
         :modules="modules"
         :slides-per-view="1"
         :space-between="150"
-        navigation
+        :effect="'fade'"
         pagination
         :draggable="true"
         :autoplay="{
@@ -43,16 +43,15 @@
 
 <script setup lang="ts">
 import {sleep} from "@antfu/utils";
-import {Navigation, Pagination, Scrollbar, Autoplay} from 'swiper/modules';
+import {Pagination, Autoplay, EffectFade} from 'swiper/modules';
 import {Swiper, SwiperSlide} from 'swiper/vue';
 
 // Import Swiper styles
 import 'swiper/css';
-import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
+import 'swiper/css/effect-fade';
 
-const modules = [Navigation, Pagination, Scrollbar, Autoplay];
+const modules = [Pagination, Autoplay, EffectFade];
 const carousel = ref<any[]>([])  // This will hold the fetched wisata data
 const loading = ref(false)  // Loading state
 const error = ref(null)  // Error handling
