@@ -108,7 +108,7 @@ export class Wisata {
             orderBy: {
                 created_at: 'desc',  // Urutkan berdasarkan 'created_at' terbaru
             },
-            take: 6,  // Batasi hasil menjadi 6
+            take: 8,  // Batasi hasil menjadi 6
             include: {
                 gambar: true,      // Mengambil gambar terkait dengan wisata
                 rating: {
