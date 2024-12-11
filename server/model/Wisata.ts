@@ -142,8 +142,9 @@ export class Wisata {
     };
 
     static updateWisata = (id: number, data: any) => {
-        return prisma.wisata.delete({
+        return prisma.wisata.update({
             where: {id},
+            data: data
         });
     };
 

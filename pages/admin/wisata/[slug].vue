@@ -43,37 +43,37 @@
           <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
             <!-- Wisata Edit Form -->
             <div class="p-6">
-              <h2 class="text-3xl font-semibold text-gray-800">Edit Wisata {{ wisata.nama }}</h2>
+              <h2 class="text-xl font-semibold text-gray-800">Edit Wisata {{ wisata.nama }}</h2>
 
               <!-- Form -->
               <form @submit.prevent="updateWisata">
                 <div class="mt-4">
-                  <label for="nama" class="block text-xl font-semibold text-gray-800">Nama Wisata</label>
+                  <label for="nama" class="block font-semibold text-gray-800">Nama Wisata</label>
                   <input v-model="wisata.nama" id="nama" class="mt-2 p-2 w-full border rounded-lg" type="text" required />
                 </div>
 
                 <div class="mt-4">
-                  <label for="deskripsi" class="block text-xl font-semibold text-gray-800">Deskripsi</label>
+                  <label for="deskripsi" class="block font-semibold text-gray-800">Deskripsi</label>
                   <textarea v-model="wisata.deskripsi" id="deskripsi" class="mt-2 p-2 w-full border rounded-lg" rows="4" required></textarea>
                 </div>
 
                 <div class="mt-4">
-                  <label for="harga" class="block text-xl font-semibold text-gray-800">Harga</label>
+                  <label for="harga" class="block font-semibold text-gray-800">Harga</label>
                   <input v-model="wisata.harga" id="harga" class="mt-2 p-2 w-full border rounded-lg" type="number" required />
                 </div>
 
                 <div class="mt-4">
-                  <label for="jam" class="block text-xl font-semibold text-gray-800">Jam Operasional</label>
+                  <label for="jam" class="block font-semibold text-gray-800">Jam Operasional</label>
                   <input v-model="wisata.jam" id="jam" class="mt-2 p-2 w-full border rounded-lg" type="text" required />
                 </div>
 
                 <div class="mt-4 flex items-center">
                   <input v-model="wisata.carousel" id="carousel" type="checkbox" class="mr-2" />
-                  <label for="carousel" class="text-xl font-semibold text-gray-800">Aktifkan Carousel</label>
+                  <label for="carousel" class="font-semibold text-gray-800">Aktifkan Carousel</label>
                 </div>
 
                 <div class="mt-4">
-                  <label for="gambar" class="block text-xl font-semibold text-gray-800">Gambar</label>
+                  <label for="gambar" class="block font-semibold text-gray-800">Gambar</label>
                   <input @change="handleImageChange" type="file" id="gambar" class="mt-2 p-2 w-full border rounded-lg" />
                 </div>
 
@@ -153,11 +153,9 @@ const updateWisata = async () => {
       }
     }
 
-    const response = await useFetchApi(`/api/auth/wisata/${wisataId}`, formData, {
+    const response: any = await useFetchApi(`/api/auth/wisata/${wisata.value.id}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
+      body: formData,
     });
 
     // Optionally handle success (e.g., show a success message or redirect)

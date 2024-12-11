@@ -84,7 +84,7 @@
                   </td>
                   <td class="px-6 py-3 whitespace-nowrap">{{ new Date(w.created_at).toDateString() }}</td>
                   <td class="px-6 py-3 whitespace-nowrap flex items-center justify-end gap-x-2">
-                    <NuxtLink class="text-blue-600" :to="`/admin/wisata/${w.id}`">
+                    <NuxtLink class="text-blue-600" :to="`/admin/wisata/${w.slug}`">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                         <g fill="currentColor">
                           <path
