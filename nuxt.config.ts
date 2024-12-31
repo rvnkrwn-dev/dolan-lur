@@ -106,5 +106,16 @@ export default defineNuxtConfig({
             nitroHeaders: true,  // Menambahkan header Nitro untuk serverless
             exportToPresets: true,  // Mengekspor untuk preset tertentu
         },
+    },
+    app: {
+        head: {
+            title: "Dolan Lur | Wisata Banyumas",
+            htmlAttrs: {
+                lang: 'id'
+            },
+            meta: [
+                {name: 'description', content: 'Dolan Lur adalah platform informasi wisata Banyumas yang menyediakan panduan lengkap tentang destinasi wisata, kuliner, dan budaya lokal. Temukan tempat-tempat menarik, aktivitas seru, dan tips perjalanan untuk menjelajahi Banyumas secara mudah dan menyenangkan.'}
+            ]
+        }
     }
 })

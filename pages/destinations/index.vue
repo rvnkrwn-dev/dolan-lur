@@ -25,15 +25,6 @@
               <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.nama }}</option>
             </select>
           </div>
-
-          <!-- Sorting by Rating -->
-          <div class="flex flex-col">
-            <select v-model="sortOrder" @change="sortWisata" id="sortBy"
-                    class="mt-2 block w-full sm:w-64 px-4 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
-              <option value="desc">Highest to Lowest</option>
-              <option value="asc">Lowest to Highest</option>
-            </select>
-          </div>
         </div>
       </div>
 
@@ -94,7 +85,7 @@ const dataWisata = ref<WisataType[]>([]);
 const categories = ref<KategoriType[]>([]);
 const loading = ref(false);
 const searchKey = ref<string | null>(null);
-const selectedCategory = ref(null);
+const selectedCategory = ref('');
 const sortOrder = ref("desc");
 
 const fetchWisata = async () => {
