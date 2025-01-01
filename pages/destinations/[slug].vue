@@ -102,49 +102,43 @@
                 </ul>
               </dd>
             </dl>
-
-            <dl class="flex flex-col sm:flex-row gap-1">
-              <dt class="min-w-40">
-                <span class="block text-sm text-gray-500">Rating:</span>
-              </dt>
-              <dd>
-                <ul>
-                  <li class="me-1 inline-flex items-center text-sm text-gray-800">
-                    {{ 0 > 0 ? '4.5' : 'N/A' }}
-                  </li>
-                </ul>
-              </dd>
-            </dl>
           </div>
         </div>
       </div>
       <div>
         <!-- Header -->
-        <h1 class="text-gray-500 mb-4">Komentar:</h1>
+        <h1 class="text-gray-500 mb-4">Komentar ({{wisata?.rating.length}})</h1>
 
         <!-- Comment Card -->
-        <div v-if="wisata?.rating" class="space-y-4">
-          <!-- Single Comment -->
-          <div v-for="rating in wisata.rating" class="bg-white p-4 rounded-lg border">
-            <div class="flex items-start">
-              <img
-                  src="/avatar.png"
-                  alt="User Avatar"
-                  class="w-10 h-10 rounded-full mr-4"
-              />
-              <div>
-                <h3 class="font-semibold">{{ rating?.user?.username }}</h3>
-                <p class="text-sm text-gray-500">Dikirim {{ new Date(rating?.created_at).toLocaleString() }}</p>
-                <div class="flex items-center">
-                  <!-- Stars -->
-                  <span v-for="i in 5" class="text-xl mr-1" :class="rating?.bintang >= i ? 'text-yellow-400' : 'text-gray-400' ">★</span>
+        <div class="space-y-4">
+          <template v-if="wisata?.rating && wisata?.rating.length > 0">
+            <!-- Single Comment -->
+            <div v-for="rating in wisata.rating" class="bg-white p-4 rounded-lg border">
+              <div class="flex items-start">
+                <img
+                    src="/avatar.png"
+                    alt="User Avatar"
+                    class="w-10 h-10 rounded-full mr-4"
+                />
+                <div>
+                  <h3 class="font-semibold">{{ rating?.user?.username }}</h3>
+                  <p class="text-sm text-gray-500">Dikirim {{ new Date(rating?.created_at).toLocaleString() }}</p>
+                  <div class="flex items-center">
+                    <!-- Stars -->
+                    <span v-for="i in 5" class="text-xl mr-1"
+                          :class="rating?.bintang >= i ? 'text-yellow-400' : 'text-gray-400' ">★</span>
+                  </div>
+                  <p class="mt-2 text-gray-700">
+                    "{{ rating?.komentar }}"
+                  </p>
                 </div>
-                <p class="mt-2 text-gray-700">
-                  "{{ rating?.komentar }}"
-                </p>
               </div>
             </div>
-          </div>
+          </template>
+
+          <template v-else>
+            <p>Belum ada ulasan</p>
+          </template>
 
           <!-- Input Section -->
           <div class="bg-white p-4 rounded-lg mt-4 border">
