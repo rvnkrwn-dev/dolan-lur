@@ -70,7 +70,7 @@ export class Wisata {
                         created_at: true,
                     }
                 },      // Mengambil user terkait dengan wisata
-                kategori: true
+                kategori: true,
             },
         });
     };

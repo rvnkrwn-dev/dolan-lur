@@ -1,6 +1,6 @@
 import { prisma } from "../config/db";
 
-interface RatingType {
+export interface RatingType {
     user_id: number;
     wisata_id: number;
     komentar: string;
@@ -10,7 +10,7 @@ interface RatingType {
 export class Rating {
     static createRating = (data: RatingType) => {
         return prisma.rating.create({
-            data,
+            data
         });
     };
 

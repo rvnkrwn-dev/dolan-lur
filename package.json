@@ -27,7 +27,8 @@
     "swiper": "^11.1.15",
     "url-pattern": "^1.0.3",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.12.2",
