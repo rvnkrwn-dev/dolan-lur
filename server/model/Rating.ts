@@ -10,7 +10,16 @@ export interface RatingType {
 export class Rating {
     static createRating = (data: RatingType) => {
         return prisma.rating.create({
-            data
+            data,
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        username: true,
+                        role: true,
+                    }
+                }
+            }
         });
     };
 

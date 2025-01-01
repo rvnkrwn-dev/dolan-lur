@@ -179,7 +179,7 @@
               <textarea
                   class="w-full border border-gray-300 rounded p-2 mb-4"
                   rows="3"
-                  placeholder="Tulis pengalamanmu..."
+                  placeholder="Tulis pengalamanmu minimal 10 karakter..."
                   required
                   v-model="komentar"
               ></textarea>
@@ -205,6 +205,8 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import type {ResponseFetchSingleWisata, WisataType} from "~/types/WisataType";
 import {formatToIDR} from "~/utils/IdrFormat";
+import Swal from 'sweetalert2';
+
 // Modules for Swiper
 const modules = [Navigation, Pagination, Scrollbar];
 const route = useRoute();
@@ -236,20 +238,53 @@ const fetchWisata = async () => {
 
 const rateWisata = async () => {
   try {
-    const payload = await useFetchApi('/api/auth/rating', {
+    // Kirim request ke API dengan payload
+    const response = await useFetchApi('/api/auth/rating', {
       method: 'POST',
       body: {
-        wisata_id: wisata.value?.id,
-        komentar: komentar.value,
-        bintang: rating.value,
-      }
-    })
+        wisata_id: wisata.value?.id, // ID wisata yang sedang dirating
+        komentar: komentar.value,    // Komentar pengguna
+        bintang: rating.value,       // Rating bintang yang diberikan
+      },
+    });
 
-    console.log(payload);
-  } catch (e) {
+    // Tampilkan notifikasi berhasil
+    await Swal.fire({
+      title: 'Berhasil!',
+      text: 'Rating Anda telah dikirim.',
+      icon: 'success',
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 1500
+    });
 
+    wisataData.value?.rating.push(response.data);
+  } catch (e: any) {
+    console.error('Error submitting rating:', e);
+
+    // Tampilkan notifikasi error
+    const errorMessage = e?.message || 'Gagal mengirim rating. Coba lagi nanti.';
+    await Swal.fire({
+      title: 'Error',
+      text: errorMessage,
+      icon: 'error',
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 1500
+    });
+  } finally {
+    komentar.value = null;
+    rating.value = 0;
+    const radios = document.querySelectorAll('input[name="hs-ratings-readonly"]');
+
+    // Setiap radio button di-uncheck
+    radios.forEach(radio => {
+      radio.checked = false;
+    });
   }
-}
+};
 
 // Fetch wisata details by slug on mounted
 onMounted(async () => {

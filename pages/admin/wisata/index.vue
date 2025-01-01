@@ -61,7 +61,7 @@
                 <th scope="col" class="ps-6 py-3 text-start">ID</th>
                 <th scope="col" class="px-6 py-3 text-start">Nama</th>
                 <th scope="col" class="px-6 py-3 text-start">Kategori</th>
-                <th scope="col" class="px-6 py-3 text-start">rating</th>
+                <th scope="col" class="px-6 py-3 text-start">Ulasan</th>
                 <th scope="col" class="px-6 py-3 text-start">Dibuat</th>
                 <th scope="col" class="px-6 py-3 text-end">Aksi</th>
               </tr>
@@ -80,7 +80,7 @@
                     {{ w.kategori.nama }}
                   </td>
                   <td class="px-6 py-3 whitespace-nowrap">
-                    {{ w.rating.length > 0 ? w.rating.length : 'N/A' }}
+                    {{ w.rating.length > 0 ? w.rating.length : 0 }}
                   </td>
                   <td class="px-6 py-3 whitespace-nowrap">{{ new Date(w.created_at).toDateString() }}</td>
                   <td class="px-6 py-3 whitespace-nowrap flex items-center justify-end gap-x-2">

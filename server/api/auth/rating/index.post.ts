@@ -29,10 +29,10 @@ export default defineEventHandler(async (event) => {
         };
 
         // Buat rating di database
-        await Rating.createRating(payload);
+        const response = await Rating.createRating(payload);
 
         setResponseStatus(event, 201);
-        return { code: 201, message: "Rating successfully created!" };
+        return { code: 201, message: "Rating successfully created!", data: response };
     } catch (error: any) {
         if (error.name === "ZodError") {
             return sendError(
