@@ -22,7 +22,10 @@
             <select v-model="selectedCategory" @change="filterWisata" id="category"
                     class="mt-2 block w-full sm:w-64 px-4 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
               <option value="" selected>All Categories</option>
-              <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.nama }}</option>
+              <option v-for="category in categories" :key="category.id" :value="category.id">{{
+                  category.nama
+                }}
+              </option>
             </select>
           </div>
         </div>
@@ -30,9 +33,11 @@
 
       <!-- Loading State -->
       <div v-if="loading" class="flex justify-center items-center py-10">
-        <svg class="animate-spin h-10 w-10 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg class="animate-spin h-10 w-10 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4"></circle>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0114.62-4.62L20 9.25A9.96 9.96 0 0022 12a9.96 9.96 0 00-2-2.75L18.62 7.62A8 8 0 014 12z"></path>
+          <path class="opacity-75" fill="currentColor"
+                d="M4 12a8 8 0 0114.62-4.62L20 9.25A9.96 9.96 0 0022 12a9.96 9.96 0 00-2-2.75L18.62 7.62A8 8 0 014 12z"></path>
         </svg>
       </div>
 
@@ -46,15 +51,15 @@
             <img :src="item.gambar[0].secure_url" :alt="item.nama"
                  class="w-full h-full object-cover rounded-xl"/>
 
-            <div class="absolute top-2 right-2">
+            <div class="absolute top-2 right-2 text-white bg-gray-500/30 py-1 px-2 text-xs font-medium rounded-full flex items-center gap-x-1">
               <!-- Menampilkan rating jika ada -->
-              <span class="py-1 px-2 text-xs font-medium bg-gray-500/30 text-white rounded-full">
-            {{ item.rating.length > 0 ? item.rating[0] : 'N/A' }}
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 inline" viewBox="0 0 24 24" fill="currentColor">
-              <path
-                  d="M12 .587l3.668 7.429L24 9.587l-6 5.857L19.335 24 12 20.021 4.665 24 6 15.444 0 9.587l8.332-1.571z"/>
-            </svg>
-          </span>
+              <span>
+                {{ item.avgRating > 0 ? item.avgRating : 'N/A' }}
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 inline" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                    d="M12 .587l3.668 7.429L24 9.587l-6 5.857L19.335 24 12 20.021 4.665 24 6 15.444 0 9.587l8.332-1.571z"/>
+              </svg>
             </div>
 
             <div class="absolute bottom-2 left-2">
@@ -76,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import type {ResponseFetchWisata, WisataType} from "~/types/WisataType";
 import type {KategoriType, ResponseFetchKategori} from "~/types/KategoriType";
 
